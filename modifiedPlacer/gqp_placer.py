@@ -12,21 +12,30 @@ from itertools import repeat
 
 class MyError(Exception):
 	def __init__(self, value):
-	        self.value = value
+		self.value = value
 
 class mothercore:
-	def __init__(self, gate, pad, numG, numP, numN, side):
-		self.gate = gate
-		self.pad = pad
+	def __init__(self, numG, numP, numN, side):
+		self.gate = dict([])
+		self.pad = dict([])
 		self.numG = numG
 		self.numP = numP
 		self.numN = numN
 		self.side = side
 		self.gateX = dict([])
 		self.gateY = dict([])
+		self.nets = dict([])
 		for l in range(1,numG+1):
 			self.gateX[l] = [None]
 			self.gateY[l] = [None]
+			self.gate[l] = [None]
+		for l in range(1,numP+1):
+			self.pad[l] = [None]
+		for l in range(1,numN+1):
+			# self.nets[0] -> gate1
+			# self.nets[1] -> gate2, if exists or 0
+			# self.nets[2] -> pad, if exists or 0
+			self.nets[l] = [0,0,0]
 		self.sortedgate = [None]*numG	
 	
 	def get_gate(self):
@@ -34,6 +43,22 @@ class mothercore:
 
 	def get_pad(self):
 		return deepcopy(self.pad)
+
+	def add_gate(self, gatenum, listofconnections):
+		self.gate[gatenum] = listofconnections
+
+	def add_pad(self, padnum, listofconnections):
+		self.pad[padnum] = listofconnections
+
+	def add_net(self, netnum, connection, gateorpad):
+		# 0 for gate, 1 for pad
+		if (gateorpad == 1):
+			self.nets[netnum][2] = connection
+		else:
+			if (self.nets[netnum][0] == 0):
+				self.nets[netnum][0] = connection
+			else:
+				self.nets[netnum][1] = connection
 
 	def add_location(self, x, y, data):	# data is required to know the keys of x,y values
 		if (len(data) == len(x)):
@@ -67,8 +92,8 @@ class mothercore:
 def create(filename):
 	print('Creating data structure from file ...')
 	cf = open(filename,'r')
-	gate = dict([])
-	pad = dict([])
+
+	## Find the number of gates, nets and pads for creating object
 	for i, line in enumerate(cf):
 		line = line.strip()
 		if line == '': continue
@@ -79,15 +104,42 @@ def create(filename):
 			numP = 1
 		elif i == numG+1:
 			numP = int(v[0])
+			break
 		else:
-			if i in range(1,numG+1):
-				gate[int(v[0])] = [int(v[j]) for j in range(1,int(v[1])+2)]
-			elif i in range(numG+2,numG+numP+2):
-				pad[int(v[0])] = [int(v[j]) for j in range(1,4)]
+			continue
+	cf.close()
+
+	## New object
+	returncore = mothercore(numG,numP,numN,[0,100,0,100])
+
+	## Add gates, nets and pads to object from file
+	cf = open(filename,'r')
+	for i, line in enumerate(cf):
+		line = line.strip()
+		if line == '': continue
+		v = line.split()
+
+		## Add gates and nets
+		if i in range(1,numG+1):
+			nets = [int(v[1])] # number of nets
+			for j in range(2,int(v[1])+2):
+				nets.append(int(v[j]))
+				returncore.add_net(int(v[j]), int(v[0]), 0)
+			returncore.add_gate(int(v[0]), nets)
+
+		## Add pads and nets
+		elif i in range(numG+2,numG+numP+2):
+			nets = []
+			for j in range(1,4):
+				nets.append(int(v[j]))
+			returncore.add_net(int(v[1]), int(v[0]), 1)
+			returncore.add_pad(int(v[0]), nets)
+		else:
+			continue
 
 	cf.close()
 	print('Done.')
-	return mothercore(gate,pad,numG,numP,numN,[0,100,0,100])
+	return returncore
 
 def solveforx(core):
 	print('Solving for locations ...')
@@ -152,34 +204,6 @@ def solveforx(core):
 	
 	### Conmat
 	print('Calculating valid contributions to the cost function ...')
-#	for i in range(0,G):
-#		if (i%10 == 0): print('3 -> Gate ',i,' of ',G)
-#		CMrowsum = 0
-#		for j in range(0,G):
-#			CM_temp = 0
-#			if (i != j):
-#				while (len(Conmat[i][j]) > 0):
-#					val = Conmat[i][j].pop()
-#					CM_temp += net[val][0]*1
-#				CM[i][j] = -CM_temp
-#			CMrowsum += CM_temp
-#		CM_temp = 0
-#		bxtemp = 0
-#		bytemp = 0
-#		while (len(Conmat[i][i]) > 0):
-#			val = Conmat[i][i].pop()
-#			while (len(net[val][1]) > 0):
-#				valpad = net[val][1].pop()
-#				#print('i ', i, ' val ',val,'valpad',valpad)
-#				CM_temp += net[val][0]*1
-#				bxtemp += net[val][0]*pad[valpad][1]
-#				bytemp += net[val][0]*pad[valpad][2]
-#		CM[i][i] = CMrowsum+CM_temp
-#		if CM[i][i] == 0: 
-#			print('ZERO ',i)
-#			CM[i][i] = 0.0001
-#		bx.append(bxtemp)
-#		by.append(bytemp)
 
 	Conmat = [[] for j in repeat(None, G)]
 	for i in range(0,G):
@@ -275,87 +299,43 @@ def writeback(core,filename):
 
 def assign(core, G, hORv, lORr):	# size of square, 1 horizontal, then 2 vertical
 	print('Assignment ...')
-#	G = deepcopy(core.get_location())
-#	### 
-#	for l in range(1,core.numG+1):	
-#		if G[0][l] < side[0]:
-#			del G[0][l]
-#			del G[1][l]
-#		elif G[0][l] > side[1]:
-#			del G[0][l]
-#			del G[1][l]
-#		elif G[1][l] < side[2]:
-#			del G[1][l]
-#			del G[0][l]
-#		elif G[1][l] > side[3]:
-#			del G[1][l]
-#			del G[0][l]
+
 	### horizontal sort
 	x = 0
 	var = deepcopy(G[x])           # 0 for horizontal (x) and 1 for vertical (y)
+	var2 = deepcopy(G[1-x])
+
+	# merge 2 sort keys into 1 using (100000*x+y). This will work as long
+	# as there are less than 100k gates.
+	for i in var.keys():
+		var2[i] = var[i]*100000+var2[i]
 	length = len(var.keys())
 	midgate = math.floor(length/2)
 	balance = length - midgate
 
-	var_temp = sorted(var.values())
-	got = 0
-	var_sorted = sorted(var, key=var.__getitem__)
+	# sort var using the modified values in var2
+	var_sorted = sorted(var, key=var2.__getitem__)
 	if (len(var_sorted) == 0):
 		return 1
-	if (var_temp[midgate-1] == var_temp[midgate]):
-		var2 = deepcopy(G[1-x])
-		var2_temp = sorted(var2, key=var2.__getitem__)
-		lessx = var_sorted[midgate-1]
-		morex = var_sorted[midgate]
-		for i in range(0,len(var2_temp)):
-			if var2_temp[i] == lessx:
-				break
-			elif var2_temp[i] == morex:
-				got = 1
-				break
-	if got == 1:
-		var_sorted[midgate-1] = morex
-		var_sorted[midgate] = lessx
-	#print('hor_sort = ', var_sorted)
 
 	### vertical sort (if necessary)
 	if (hORv == 1):
 		sortdata = deepcopy(var_sorted)
 		gateslORr = sortdata[0+(midgate*lORr):midgate+(balance*lORr)]
-		#print('halve = ',gateslORr)
-		midgate = math.floor(len(gateslORr)/2)
-
+		
 		x = 1
 		var = deepcopy(G[x])
+		var2 = deepcopy(G[1-x])
 		keys = deepcopy(var)
 		for i in keys:
 			if i not in gateslORr:
 				del var[i]
-		#print(var)
-		var_temp = sorted(var.values())
-		got = 0
-		var_sorted = sorted(var, key=var.__getitem__)
+				del var2[i]
+		for i in var.keys():
+			var2[i] = var[i]*100000+var2[i]
+		var_sorted = sorted(var, key=var2.__getitem__)
 		if (len(var_sorted) == 0):
-			return 1
-		if (var_temp[midgate-1] == var_temp[midgate]):
-			var2 = deepcopy(G[1-x])
-			keys = deepcopy(var2)
-			for i in keys:
-				if i not in gateslORr:
-					del var2[i]
-			var2_temp = sorted(var2, key=var2.__getitem__)
-			lessx = var_sorted[midgate-1]
-			morex = var_sorted[midgate]
-			for i in range(0,len(var2_temp)):
-				if var2_temp[i] == lessx:
-					break
-				elif var2_temp[i] == morex:
-					got = 1
-					break
-		if got == 1:
-			var_sorted[midgate-1] = morex
-			var_sorted[midgate] = lessx
-		#print(var_sorted)	
+			return 1	
 	core.add_sorted(deepcopy(var_sorted))		
 	return 1
 
@@ -363,40 +343,59 @@ def containNrun(core, side, hORv, lORr):
 	print('Containment ...')
 	new = deepcopy(core)
 	new.side = deepcopy(side)
+
+	## Update the pad coordinates of existing pads according to bounding box
 	for l in range(1,new.numP+1):
+		# X less than Xmin
 		if new.pad[l][1] < side[0]:
 			new.pad[l][1] = side[0]
-		elif new.pad[l][1] > side[1]:
+		# X more than Xmax
+		if new.pad[l][1] > side[1]:
 			new.pad[l][1] = side[1]
-		elif new.pad[l][2] < side[2]:
+		# Y less than Ymin
+		if new.pad[l][2] < side[2]:
 			new.pad[l][2] = side[2]
-		elif new.pad[l][2] > side[3]:
+		# Y more than Ymax
+		if new.pad[l][2] > side[3]:
 			new.pad[l][2] = side[3]
 	
 	sortgate = new.sortedgate
 	midgate = math.floor(len(sortgate)/2)
 	balance = len(sortgate) - midgate
-	print('sorteddata =', len(sortgate))
+	# print('sorteddata =', sortgate)
+
+	# i in leftside or rightside depending on lORr
 	for i in range(0+(midgate*lORr),midgate+(balance*lORr)):
+		# j in otherside from i depending on lORr
 		for j in range(midgate-(midgate*lORr),len(sortgate)-(balance*lORr)):
+			# k recurses through all connected nets in gate[sortgate[i]]
 			for k in range(1,new.gate[sortgate[i]][0]+1):
+				# l recurses through all connected nets in gate[sortgate[j]]
 				for l in range(1,new.gate[sortgate[j]][0]+1):
 					#print('i = ', sortgate[i],'k = ', k , 'j = ',sortgate[j])
+
+					## If nets match, propagate connected gate to cutline
 					if new.gate[sortgate[i]][k] == new.gate[sortgate[j]][l]:
 						newtemp = [None]*3
 						newtemp[0] = new.gate[sortgate[j]][l]
 						newtemp[1] = new.gateX[sortgate[j]]
 						newtemp[2] = new.gateY[sortgate[j]]
 						
+						## Correct coordinates which are outside the bounding box
+						# X less than Xmin
 						if newtemp[1] < side[0]:
 							newtemp[1] = side[0]
-						elif newtemp[1] > side[1]:
-						        newtemp[1] = side[1]
-						elif newtemp[2] < side[2]:
-						        newtemp[2] = side[2]
-						elif newtemp[2] > side[3]:
-						        newtemp[2] = side[3]
+						# X more than Xmax	
+						if newtemp[1] > side[1]:
+							newtemp[1] = side[1]
+						# Y less than Ymin        
+						if newtemp[2] < side[2]:
+							newtemp[2] = side[2]
+						# Y more than Ymax        
+						if newtemp[2] > side[3]:
+							newtemp[2] = side[3]
 
+						## Correct coordinates which may be inside the bounding box
 						if (hORv == 0):
 							if (lORr == 0):
 								newtemp[1] = side[1]
@@ -407,16 +406,15 @@ def containNrun(core, side, hORv, lORr):
 								newtemp[2] = side[3]
 							else:
 								newtemp[2] = side[2]
+
+						## When gates outside bounding box becomes pads
 						if newtemp not in new.pad.values(): 		
 							new.numP += 1
 							new.pad[new.numP] = newtemp
 					else:
 						continue
-	g = deepcopy(len(sortgate))
-	for j in range(midgate-(midgate*lORr),g-(balance*lORr)):
-		del new.gate[sortgate[j]]	
-		new.numG -= 1
-	
+
+	## remove gates which are on the other side, dictated by lORr
 	sortdata = sortgate[0+(midgate*lORr):midgate+(balance*lORr)]
 	oldgate = deepcopy(new.gate)
 	for gate in oldgate:
@@ -426,6 +424,8 @@ def containNrun(core, side, hORv, lORr):
 
 	print('gates = ',len(list(new.gate.keys())))
 	#print('pads = ',new.pad)
+	
+	## if solveforx returns successfully, add all the new locations to core
 	if (solveforx(new)):
 		try:
 			if (core.add_location(deepcopy(list(new.gateX.values())),deepcopy(list(new.gateY.values())),deepcopy(list(core.gate.keys()))) is False):

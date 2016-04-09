@@ -1,2 +1,2 @@
 run: visualize.py final.txt
-	python visualize.py
+	python visualize.py final.txt
