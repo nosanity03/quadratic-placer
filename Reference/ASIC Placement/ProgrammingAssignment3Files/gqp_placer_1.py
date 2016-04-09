@@ -436,7 +436,7 @@ def place(core,side,n):
 		place(core,[side[0]+midx,side[1],side[2]+midy,side[3]],n)	# right above
 
 def main():
-	QP1 = create('benchmarks/8x8 QP/industry2')
+	QP1 = create('benchmarks/8x8 QP/industry1')
 	n = 1
 	side = [0,100,0,100]
 	print()
