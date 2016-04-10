@@ -1,0 +1,20 @@
+\begin{theindex}
+
+  \item {\+\_\+\+\_\+init\+\_\+\+\_\+}
+    \subitem {gqp\+\_\+placer\+::\+My\+Error}, \hyperpage{11}
+    \subitem {gqp\+\_\+placer\+::mothercore}, \hyperpage{10}
+
+  \indexspace
+
+  \item {get\+\_\+numG}
+    \subitem {gqp\+\_\+placer\+::mothercore}, \hyperpage{10}
+  \item {gqp\+\_\+placer}, \hyperpage{7}
+  \item {gqp\+\_\+placer.\+mothercore}, \hyperpage{9}
+  \item {gqp\+\_\+placer.\+My\+Error}, \hyperpage{10}
+  \item {gqp\+\_\+placer\+::\+My\+Error}
+    \subitem {\+\_\+\+\_\+init\+\_\+\+\_\+}, \hyperpage{11}
+  \item {gqp\+\_\+placer\+::mothercore}
+    \subitem {\+\_\+\+\_\+init\+\_\+\+\_\+}, \hyperpage{10}
+    \subitem {get\+\_\+numG}, \hyperpage{10}
+
+\end{theindex}
