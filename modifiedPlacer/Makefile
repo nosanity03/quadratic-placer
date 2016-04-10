@@ -1,3 +1,7 @@
+myex: gqp_placer.py myexample
+	python3 gqp_placer.py myexample
+	python ../visualization/visualize.py final.txt
+
 small1: gqp_placer.py ../benchmarks/toy1
 	python3 gqp_placer.py ../benchmarks/toy1
 	python ../visualization/visualize.py final.txt
@@ -31,4 +35,4 @@ large3: gqp_placer.py ../benchmarks/industry2
 	python ../visualization/visualize.py final.txt
 
 clean:
-	rm -f final.txt
+	rm -f final.txt QP1.txt QP2.txt QP3.txt
