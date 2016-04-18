@@ -66,32 +66,32 @@ class mothercore:
 	def get_gateconnections(self, gatenum):
 		return deepcopy(self.gate[gatenum])
 
+	## Helper function which returns the location of a given gate of number 'gatenum'
 	def get_gatelocation(self, gatenum):
-		## Returns location of given gate
 		return deepcopy([self.gateX[gatenum], self.gateY[gatenum]])
 
+	## Helper function which returns the dictionary of pads
 	def get_pad(self):
-		## Returns dictionary of pads
 		return deepcopy(self.pad)
 
+	## Helper function which returns the location of a given pad of number 'padnum'
 	def get_padlocation(self, padnum):
-		## Returns location of a pad
 		return deepcopy(self.pad[padnum])
 
+	## Helper function which makes a new gate and adds list of connections
 	def add_gate(self, gatenum, listofconnections):
-		## Makes a new gate and adds list of connections
 		self.gate[gatenum] = deepcopy(listofconnections)
 		self.numG += 1
 		return 1
 
+	## Helper function which makes a new pad and adds its connections and location
 	def add_pad(self, padnum, netandlocation):
-		## Makes a new pad and adds its connections and location
 		self.pad[padnum] = deepcopy(netandlocation)
 		self.numP += 1
 		return 1
 
+	## Helper function which makes a new net, if needed, and appends connections to the net 'netnum'
 	def add_net(self, netnum, connection, gateorpad):
-		## Appends a connection to a net
 		# 0 for gate, 1 for pad
 
 		## if netnum doesn't already exist in dictionary
@@ -105,8 +105,8 @@ class mothercore:
 			self.nets[netnum][0].append(deepcopy(connection))
 		return 1
 
+	## Helper function which adds a list of connections to a net of number 'netnum'
 	def add_netconns(self, netnum, listofconnections):
-		## Adds a list of connections to a net
 		# 0 for gate, 1 for pad
 
 		## if netnum doesn't already exist in dictionary
@@ -117,8 +117,9 @@ class mothercore:
 		self.nets[netnum] = deepcopy(listofconnections)
 		return 1
 
+	## Helper function which returns the connections of a net 'netnum' other than the given gate 
 	def get_otherconns(self, netnum, gatenum):
-		# returns the other entities connected to Net "netnum", other than "gatenum"
+		# returns the other entities connected to Net "netnum", other than "gatenum".
 		# returns a list of 2 lists: first list for gates, second for pads
 		netconns = deepcopy(self.nets[netnum])
 
@@ -129,13 +130,12 @@ class mothercore:
 		netconns[0].remove(gatenum)
 		return netconns
 
+	## Helper function which returns the dictionary of nets
 	def get_nets(self):
-		## Returns the dictionary of nets
 		return deepcopy(self.nets)
 
-
+	## Helper function which adds location values for given gate keys
 	def add_location(self, x, y, data):	# data is required to know the keys of x,y values
-		## Adds location values for given gate keys
 		if (len(data) == len(x)):
 			for l in range(0,len(data)):
 				xloc = x[l]
@@ -159,12 +159,12 @@ class mothercore:
 		self.sortedgate = deepcopy(sort)
 		return 1
 
+	## Helper function which returns a sorted list of gates
 	def get_sorted(self):
-		## Returns sorted list of gates
 		return deepcopy(self.sortedgate)
 
+	## Helper function which returns a list of locations
 	def get_location(self):
-		## Returns list of locations
 		l = [None]*2
 		l[0] = deepcopy(self.gateX)
 		l[1] = deepcopy(self.gateY)
