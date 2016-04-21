@@ -14,9 +14,10 @@ using namespace std;
 
 typedef vector<vector<int> > vvi;
 typedef vector<int> vi;
+typedef vector<double> vd;
 
 class mothercore{
-	int numG,numP,numN,side[4];
+	int numG,numP,numN;
 	map <int, vector <int> > gate;
 	map <int, vector <int> > pad;
 	map <int, vvi> nets;
@@ -31,37 +32,36 @@ class mothercore{
 		numN=0;
 	}
 
-  // Helper function to set side
-  void set_side(int givenside[4]) {
-    int i;
-    for (i = 0; i < 4; i++) {
-      this->side[i] = givenside[i];
-    }
-    return;
-  }
-
   // Helper function to return the number of gates.
 	int get_numG() {
 		return this->numG;
   }
 	
   // Helper function to return gate keys
-  vector<int> get_gateKeys() {
-    vector<int> v;
+  vi get_gateKeys() {
+    vi v;
     for(map<int,vi>::iterator it = this->gate.begin(); it != this->gate.end(); ++it) {
       v.push_back(it->first);
     }
     return v;
   }
 	
+  // Helper function to return gate coordinates
+  vd get_gateCoords(int gateNum) {
+    vd v;
+    v.push_back(this->gateX[gateNum]); // x coordinate
+    v.push_back(this->gateY[gateNum]); // y coordinate
+    return v;
+  }
+  
   // Helper function to return the number of pads
 	int get_numP() {
 		return this->numP;
   }
   
   // Helper function to return pad keys
-  vector<int> get_padKeys() {
-    vector<int> v;
+  vi get_padKeys() {
+    vi v;
     for(map<int,vi>::iterator it = this->pad.begin(); it != this->pad.end(); ++it) {
       v.push_back(it->first);
     }
@@ -69,8 +69,8 @@ class mothercore{
   }
 
   // Helper function to return pad coordinates
-  vector<int> get_padCoords(int padNum) {
-    vector<int> v;
+  vi get_padCoords(int padNum) {
+    vi v;
     v.push_back(this->pad[padNum][1]); // x coordinate
     v.push_back(this->pad[padNum][2]); // y coordinate
     return v;
@@ -82,8 +82,8 @@ class mothercore{
   }
 
   // Helper function to return net keys
-  vector<int> get_netKeys() {
-    vector<int> v;
+  vi get_netKeys() {
+    vi v;
     for(map<int,vvi>::iterator it = this->nets.begin(); it != this->nets.end(); ++it) {
       v.push_back(it->first);
     }
@@ -97,27 +97,27 @@ class mothercore{
   }
 
   // Helper function to return gate connections to a net
-  vector<int> get_netGateConns(int netNum) {
+  vi get_netGateConns(int netNum) {
     return nets[netNum][0];
   }
 
   // Helper function to return pad connections to a net
-  vector<int> get_netPadConns(int netNum) {
+  vi get_netPadConns(int netNum) {
     return nets[netNum][1];
   }
 
   // Helper function which adds location values for given gate keys
-	bool add_location(vector<double> x, vector<double> y, vi gatekeys) {
+	bool add_location(vd x, vd y, vi gatekeys, int bound[4]) {
     int l;
     double xloc, yloc;
 		if ((gatekeys.size() == x.size()) && (x.size() == y.size())) {
 			for (l = 0; l < gatekeys.size(); l++) {
 				xloc = x[l];
 				yloc = y[l];
-        if (x[l] < this->side[0]) xloc = this->side[0]; // xmin
-				if (x[l] > this->side[1])	xloc = this->side[1]; // xmax
-				if (y[l] < this->side[2]) yloc = this->side[2]; // ymin
-        if (y[l] > this->side[3]) yloc = this->side[3]; // ymax
+        if (x[l] < bound[0]) xloc = bound[0]; // xmin
+				if (x[l] > bound[1]) xloc = bound[1]; // xmax
+				if (y[l] < bound[2]) yloc = bound[2]; // ymin
+        if (y[l] > bound[3]) yloc = bound[3]; // ymax
 				this->gateX[gatekeys[l]] = xloc;
 				this->gateY[gatekeys[l]] = yloc;
       }
@@ -131,7 +131,7 @@ class mothercore{
   // core.
   void print_all_locations() {
     int i;
-    vector<int> keyG = this->get_gateKeys();
+    vi keyG = this->get_gateKeys();
     cout << "Locations:";
     for (i = 0; i < this->numG; ++i) { 
       cout << endl;
@@ -247,9 +247,9 @@ class mothercore{
 };
 
 
-vector<double> solve(vector<int> R, vector<int> C, vector<double> V, vector<double> ba) {
+vd solve(vi R, vi C, vd V, vd ba) {
   coo_matrix A;
-  vector<double> aout;
+  vd aout;
 
   A.n = ba.size();
   A.nnz = R.size();
@@ -275,14 +275,14 @@ vector<double> solve(vector<int> R, vector<int> C, vector<double> V, vector<doub
   return aout;
 }
 
-bool solveforx(mothercore core) {
+bool solveforx(mothercore *core, int bound[4]) {
   cout << "Solving for locations ..." << endl;
   /////////////////////////////////////////////////////////////////////
   // Initializations
 
-  vector<int> keyG = core.get_gateKeys();
-  vector<int> keyP = core.get_padKeys();
-  vector<int> keyN = core.get_netKeys();
+  vi keyG = core->get_gateKeys();
+  vi keyP = core->get_padKeys();
+  vi keyN = core->get_netKeys();
   int G = keyG.size();
   int P = keyP.size();
   int N = keyN.size();
@@ -313,7 +313,7 @@ bool solveforx(mothercore core) {
   cout << "Calculating weights ..." << endl;
   for(i = 0; i < N; ++i) {
     netval = keyN[i];
-    k = core.get_numNetConns(netval);
+    k = core->get_numNetConns(netval);
     //cout << netval << " " << k << endl;
     weights[netval] = 1.0/(k-1);
   }
@@ -331,13 +331,13 @@ bool solveforx(mothercore core) {
 
   int numgates, numpads;
   double weight;
-  vector<int> gates, pads, padCoordinate;
+  vi gates, pads, padCoordinate;
   for(k = 0; k < N; ++k) {
     netval = keyN[k];
     weight = weights[netval];
-    gates = core.get_netGateConns(netval);
+    gates = core->get_netGateConns(netval);
     numgates = gates.size();
-    pads = core.get_netPadConns(netval);
+    pads = core->get_netPadConns(netval);
     numpads = pads.size();
     if (numgates > 1) {
       i = 0;
@@ -360,7 +360,7 @@ bool solveforx(mothercore core) {
         j = 0;
         while (j < numpads) {
           A[gateorder[gates[i]]][gateorder[gates[i]]] += weight;
-          padCoordinate = core.get_padCoords(pads[j]);
+          padCoordinate = core->get_padCoords(pads[j]);
           bx[gateorder[gates[i]]] += weight*padCoordinate[0];
           by[gateorder[gates[i]]] += weight*padCoordinate[1];
           j += 1;
@@ -395,12 +395,12 @@ bool solveforx(mothercore core) {
   // Derive R, C, V matrices for sparse matrix generation
   cout << "Forming R, C, V matrices ..." << endl;
 
-  vector<int> Rsm, Csm;
-  vector<double> Vsm;
-  vector<double> locx;
-  vector<double> locy;
-  vector<double> bxsm;
-  vector<double> bysm;
+  vi Rsm, Csm;
+  vd Vsm;
+  vd locx;
+  vd locy;
+  vd bxsm;
+  vd bysm;
 
   for (i = 0; i < G; i++) {
     for (j = 0; j < G; j++) {
@@ -420,15 +420,73 @@ bool solveforx(mothercore core) {
   locx = solve(Rsm, Csm, Vsm, bxsm);
   locy = solve(Rsm, Csm, Vsm, bysm);
 
-  if (!core.add_location(locx, locy, keyG)) {
+  if (!core->add_location(locx, locy, keyG, bound)) {
     cout<<"Error in adding new locations."<<endl;
     return false;
   } else {
-    core.print_all_locations();
     cout<<"Successfully added new locations."<<endl;
     return true;
   }
 }
+
+// Function which sorts given gates according to locations horizontally or
+// vertically. Horizontally if hORv = 0; Vertically if hORv = 1
+vvi assign(mothercore *core, vi gatekeys, int hORv) { 
+	cout << "Assignment ..." << endl;
+
+  /////////////////////////////////////////////////////////////////////
+  // Initializations
+  int i, gatenum = 0;
+  double customlocation = 0;
+  int numkeys = gatekeys.size();
+  int halfOfTotalGates = numkeys/2;
+
+  vi sortedGates, tempvector;
+  vvi returnvectors;
+  vd location;
+  map< double, int > sortingmap; 
+  // map sorts its elements by keys. It doesn't care about the values when sorting. 
+  // So, our key is custom location value, and value is gatekey.
+
+  /////////////////////////////////////////////////////////////////////
+  // getting locations of given gatekeys, and forming custom location value.
+  for (i = 0; i < numkeys; i++) {
+    gatenum = gatekeys[i];
+    location = core->get_gateCoords(gatenum);
+
+    // merge 2 sort keys into 1 using (100000*x+y) (hORv = 0) or 
+    // (100000*y+x) (hORv = 1). This will work as long as there are less than 
+    // 100k gates.
+    customlocation = (location[hORv]*100000)+location[1-hORv];
+
+    // Checking for duplicate key
+    if ( sortingmap.find(customlocation) != sortingmap.end() ) {
+      // found a duplicate key, change key
+      customlocation += 0.000001;
+    }
+    sortingmap[customlocation] = gatenum;
+  }
+
+  /////////////////////////////////////////////////////////////////////
+  // get the sorted gates
+  for (map<double, int>::iterator it = sortingmap.begin(); it != sortingmap.end(); it++) {
+    // cout << it->second << '\n';
+    sortedGates.push_back(it->second);
+  }
+
+  /////////////////////////////////////////////////////////////////////
+  // return
+  for (i = 0; i < halfOfTotalGates; i++) {
+    tempvector.push_back(sortedGates[i]);
+  }
+  returnvectors.push_back(tempvector);
+  tempvector.clear();
+  for (i = halfOfTotalGates; i < numkeys; i++) {
+    tempvector.push_back(sortedGates[i]);
+  }
+  returnvectors.push_back(tempvector);
+  return returnvectors;
+}	
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
@@ -437,8 +495,28 @@ int main(int argc, char* argv[]) {
   }
   mothercore core;
   core.create(argv[1]);
-  int initial_side[4] = { 0, 100, 0, 100 };
-  core.set_side(initial_side);
-  solveforx(core);
+  int initial_bound[4] = { 0, 100, 0, 100 };
+  solveforx(&core, initial_bound);
+  core.print_all_locations();
+
+  // call assign
+  vi keyG = core.get_gateKeys();
+  vvi leftrightGates = assign(&core, keyG, 0);
+
+  // print
+  int i;
+  cout << "Sorted Left Gates:" << endl;
+  cout << leftrightGates[0].size() << " Gates out of " << keyG.size() << endl;
+  for (i = 0; i < leftrightGates[0].size(); i++) {
+    cout << leftrightGates[0][i] << " ";
+  }
+  cout << endl;
+
+  cout << "Sorted Right Gates:" << endl;
+  cout << leftrightGates[1].size() << " Gates out of " << keyG.size() << endl;
+  for (i = 0; i < leftrightGates[1].size(); i++) {
+    cout << leftrightGates[1][i] << " ";
+  }
+  cout << endl;
   return 0;
 }
