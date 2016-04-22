@@ -486,7 +486,12 @@ vvi assign(mothercore *core, vi gatekeys, int hORv) {
   }
   returnvectors.push_back(tempvector);
   return returnvectors;
-}	
+}
+
+bool containNrun(mothercore *core, vi gatekeys, int bound[4], int hORv, int lORr) {
+  cout << "Containment ..." << endl;;
+  return true;
+}
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
@@ -518,5 +523,17 @@ int main(int argc, char* argv[]) {
     cout << leftrightGates[1][i] << " ";
   }
   cout << endl;
+
+  // call containNrun
+  int new_bound[4] = { 0, 100, 0, 100 };
+  
+  cout << "Containing Left Gates:" << endl;
+  new_bound[1] = initial_bound[1]/2;
+  containNrun(&core, leftrightGates[0], new_bound, 0, 0);
+  
+  cout << "Containing Right Gates:" << endl;
+  new_bound[0] = new_bound[1];
+  new_bound[1] = initial_bound[1];
+  containNrun(&core, leftrightGates[1], new_bound, 0, 1);
   return 0;
 }
