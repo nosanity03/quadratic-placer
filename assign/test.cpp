@@ -460,7 +460,7 @@ vvi assign(mothercore *core, vi gatekeys, int hORv) {
     customlocation = (location[hORv]*100000)+location[1-hORv];
 
     // Checking for duplicate key
-    if ( sortingmap.find(customlocation) != sortingmap.end() ) {
+    while ( sortingmap.find(customlocation) != sortingmap.end() ) {
       // found a duplicate key, change key
       customlocation += 0.000001;
     }
