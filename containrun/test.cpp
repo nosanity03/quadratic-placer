@@ -13,13 +13,14 @@
 using namespace std;
 
 typedef vector<vector<int> > vvi;
+typedef vector<vector<double> > vvd;
 typedef vector<int> vi;
 typedef vector<double> vd;
 
 class mothercore{
 	int numG,numP,numN;
-	map <int, vector <int> > gate;
-	map <int, vector <int> > pad;
+	map <int, vi > gate;
+	map <int, vd > pad;
 	map <int, vvi> nets;
 	map <int, double> gateX;
 	map <int, double> gateY;
@@ -53,32 +54,51 @@ class mothercore{
     v.push_back(this->gateY[gateNum]); // y coordinate
     return v;
   }
-  
-  // Helper function to return the number of pads
-	int get_numP() {
-		return this->numP;
+
+  // Helper function to return connections of a gate
+  vi get_gateconnections(int gateNum) {
+    return this->gate[gateNum];
   }
-  
+
+  // Helper function which makes a new gate and adds list of connections
+  void add_gate(int gateNum, vi listofconnections) {
+    this->gate[gateNum] = listofconnections;
+    this->numG++;
+    return;
+  }
+
+  // Helper function to return the number of pads
+  int get_numP() {
+    return this->numP;
+  }
+
   // Helper function to return pad keys
   vi get_padKeys() {
     vi v;
-    for(map<int,vi>::iterator it = this->pad.begin(); it != this->pad.end(); ++it) {
+    for(map<int,vd>::iterator it = this->pad.begin(); it != this->pad.end(); ++it) {
       v.push_back(it->first);
     }
     return v;
   }
 
   // Helper function to return pad coordinates
-  vi get_padCoords(int padNum) {
-    vi v;
+  vd get_padCoords(int padNum) {
+    vd v;
     v.push_back(this->pad[padNum][1]); // x coordinate
     v.push_back(this->pad[padNum][2]); // y coordinate
     return v;
   }
-	
+
+	// Helper function which makes a new pad and adds its connections and location
+	void add_pad(int padNum, vd netandlocation) {
+		this->pad[padNum] = netandlocation;
+		this->numP++;
+		return;
+  }
+
   // Helper function to return the number of nets
-	int get_numN() {
-		return this->numN;
+  int get_numN() {
+    return this->numN;
   }
 
   // Helper function to return net keys
@@ -106,25 +126,58 @@ class mothercore{
     return nets[netNum][1];
   }
 
+  // Helper function which makes a new net, if needed, and appends a connection to the net 'netnum'
+	void add_net(int netNum, int connection, int gateorpad) {
+		// 0 for gate, 1 for pad
+
+		// if netnum doesn't already exist in dictionary
+    if (this->nets.find(netNum) == this->nets.end()) {
+      vi gates;
+      vi pads;
+      vvi empty_netconn;
+      empty_netconn.push_back(gates);
+      empty_netconn.push_back(pads);
+			this->nets[netNum] = empty_netconn; // first vector for gates, second for pads
+			this->numN += 1;
+    }
+
+		if (gateorpad == 1) this->nets[netNum][1].push_back(connection);
+    else this->nets[netNum][0].push_back(connection);
+    return;
+  }
+
   // Helper function which adds location values for given gate keys
-	bool add_location(vd x, vd y, vi gatekeys, int bound[4]) {
+  bool add_location(vd x, vd y, vi gatekeys, int bound[4]) {
     int l;
     double xloc, yloc;
-		if ((gatekeys.size() == x.size()) && (x.size() == y.size())) {
-			for (l = 0; l < gatekeys.size(); l++) {
-				xloc = x[l];
-				yloc = y[l];
+    if ((gatekeys.size() == x.size()) && (x.size() == y.size())) {
+      for (l = 0; l < gatekeys.size(); l++) {
+        xloc = x[l];
+        yloc = y[l];
         if (x[l] < bound[0]) xloc = bound[0]; // xmin
-				if (x[l] > bound[1]) xloc = bound[1]; // xmax
-				if (y[l] < bound[2]) yloc = bound[2]; // ymin
+        if (x[l] > bound[1]) xloc = bound[1]; // xmax
+        if (y[l] < bound[2]) yloc = bound[2]; // ymin
         if (y[l] > bound[3]) yloc = bound[3]; // ymax
-				this->gateX[gatekeys[l]] = xloc;
-				this->gateY[gatekeys[l]] = yloc;
+        this->gateX[gatekeys[l]] = xloc;
+        this->gateY[gatekeys[l]] = yloc;
       }
-			return true;
+      return true;
     }	else {
-			return false;
+      return false;
     }
+  }
+
+  vvd get_locations(vi gatekeys) {
+    vd xloc, yloc;
+    vvd returnvec;
+    int l;
+    for (l = 0; l < gatekeys.size(); l++) {
+      xloc.push_back(this->gateX[gatekeys[l]]);
+      yloc.push_back(this->gateY[gatekeys[l]]);
+    }
+    returnvec.push_back(xloc);
+    returnvec.push_back(yloc);
+    return returnvec;
   }
 
   // Helper function which prints the locations of all gates in the present
@@ -136,6 +189,19 @@ class mothercore{
     for (i = 0; i < this->numG; ++i) { 
       cout << endl;
       cout << "Gate " << keyG[i] << ": " << this->gateX[keyG[i]] << ", " << this->gateY[keyG[i]];
+    }
+    cout << endl;
+  }
+
+  // Helper function which prints the pads in the present core.
+  void print_all_pads() {
+    int i, padnum;
+    vi keyP = this->get_padKeys();
+    cout << "Pads:";
+    for (i = 0; i < this->numP; ++i) { 
+      padnum = keyP[i];
+      cout << endl;
+      cout << "Pad " << padnum << ": Net - " << this->pad[padnum][0] << ", Location - ("<< this->pad[padnum][1] << ", " << this->pad[padnum][2] << ")";
     }
     cout << endl;
   }
@@ -206,7 +272,7 @@ class mothercore{
               if (word_no==1) {
                 key = num;
                 //cout << "Pad no. " << key << " is connected to net no. ";
-                vector <int> vec;
+                vd vec;
                 pad[key]=vec;
               }
               else if (word_no==2) {
@@ -245,7 +311,6 @@ class mothercore{
        */
   }
 };
-
 
 vd solve(vi R, vi C, vd V, vd ba) {
   coo_matrix A;
@@ -331,7 +396,8 @@ bool solveforx(mothercore *core, int bound[4]) {
 
   int numgates, numpads;
   double weight;
-  vi gates, pads, padCoordinate;
+  vi gates, pads;
+  vd padCoordinate;
   for(k = 0; k < N; ++k) {
     netval = keyN[k];
     weight = weights[netval];
@@ -432,7 +498,7 @@ bool solveforx(mothercore *core, int bound[4]) {
 // Function which sorts given gates according to locations horizontally or
 // vertically. Horizontally if hORv = 0; Vertically if hORv = 1
 vvi assign(mothercore *core, vi gatekeys, int hORv) { 
-	cout << "Assignment ..." << endl;
+  cout << "Assignment ..." << endl;
 
   /////////////////////////////////////////////////////////////////////
   // Initializations
@@ -488,9 +554,125 @@ vvi assign(mothercore *core, vi gatekeys, int hORv) {
   return returnvectors;
 }
 
-bool containNrun(mothercore *core, vi gatekeys, int bound[4], int hORv, int lORr) {
-  cout << "Containment ..." << endl;;
-  return true;
+void update_coordinates(vd *padlocation, int bound[4]) {
+  if ((*padlocation)[0] < (double)bound[0]) (*padlocation)[0] = (double)bound[0]; // xmin
+  if ((*padlocation)[0] > (double)bound[1]) (*padlocation)[0] = (double)bound[1]; // xmax
+  if ((*padlocation)[1] < (double)bound[2]) (*padlocation)[1] = (double)bound[2]; // ymin
+  if ((*padlocation)[1] > (double)bound[3]) (*padlocation)[1] = (double)bound[3]; // ymax
+  return;
+}
+
+vvd containNrun(mothercore *core, vi gatekeys, int bound[4], int hORv, int lORr) {
+  cout << "Containment ..." << endl;
+  mothercore newcore;
+  int i, pgatenum, k, pnet, l, newconn, ppadnum;
+  vi pgateconns, donepads, donenets, netconn;
+  vd padtemp, padlocation;
+
+  /////////////////////////////////////////////////////////////////////
+  // add gates to the new core, which are on appropriate side
+  for (i = 0; i < gatekeys.size(); i++) {
+    pgateconns = core->get_gateconnections(gatekeys[i]);
+    newcore.add_gate(gatekeys[i], pgateconns);
+  }
+
+  /////////////////////////////////////////////////////////////////////
+  // add pads and nets to the new core
+
+  ppadnum = 0;
+  // i recurses through the gates in gatekeys
+  for (i = 0; i < gatekeys.size(); i++) {
+    pgatenum = gatekeys[i];
+    pgateconns = newcore.get_gateconnections(pgatenum);
+
+    // k recurses through the nets in the presentgate
+    for (k = 0; k < pgateconns.size(); k++) {
+      pnet = pgateconns[k];
+      if (find(donenets.begin(), donenets.end(), pnet) != donenets.end()) {
+        // processed the present net already
+        continue;
+      } else {
+        donenets.push_back(pnet);
+      }
+
+      // for each net get all the pad connections
+      netconn = core->get_netPadConns(pnet);
+
+      // process connected pads as new pads
+      for (l = 0; l < netconn.size(); l++) {
+        newconn = netconn[l];	// pad number
+        ppadnum++;
+        newcore.add_net(pnet, ppadnum, 1);
+
+        padtemp.push_back((double)pnet);
+        padlocation = core->get_padCoords(newconn);
+
+        // correct coordinates which are outside the bounding box
+        update_coordinates(&padlocation, bound);
+        padtemp.push_back(padlocation[0]);
+        padtemp.push_back(padlocation[1]);
+
+        // add new pad
+        newcore.add_pad(ppadnum, padtemp);
+        padtemp.clear();
+      }
+
+      // for each net get all the gate connections
+      netconn = core->get_netGateConns(pnet);
+
+      // process connected gates as new pads
+      for (l = 0; l < netconn.size(); l++) {
+        newconn = netconn[l]; // gate number
+
+        // skipping if newconn is a gate inside the bounding box
+        if (find(gatekeys.begin(), gatekeys.end(), newconn) != gatekeys.end()) {
+          newcore.add_net(pnet, newconn, 0);
+          continue;
+        }
+        ppadnum++;
+        newcore.add_net(pnet, ppadnum, 1);
+
+        padtemp.push_back((double)pnet);
+        padlocation = core->get_gateCoords(newconn);
+
+        // correct coordinates of gates if they are outside the bounding box
+        update_coordinates(&padlocation, bound);
+
+        // correct coordinates of gates if they are inside the bounding box
+        if (hORv == 0) {
+          if (lORr == 0)
+            // left of a horizontal cut
+            padlocation[0] = bound[1];
+          else
+            // right of a horizontal cut
+            padlocation[0] = bound[0];
+        } else {
+          if (lORr == 0)
+            // top of a vertical cut
+            padlocation[1] = bound[3];
+          else
+            // bottom of a vertical cut
+            padlocation[1] = bound[2];
+        }
+        padtemp.push_back(padlocation[0]);
+        padtemp.push_back(padlocation[1]);
+
+        // add new pad
+        newcore.add_pad(ppadnum, padtemp);
+        padtemp.clear();
+      }
+    }
+  }
+
+  cout << "Done. Added " << newcore.get_numG() << " gates, " ;
+  cout << newcore.get_numP() << " pads, " << newcore.get_numN() << " nets." << endl;
+  //newcore.print_all_locations();
+  //newcore.print_all_pads();
+
+  /////////////////////////////////////////////////////////////////////
+  // solve "newcore" for locations of gates inside bound
+  solveforx(&newcore, bound);
+  return newcore.get_locations(gatekeys);
 }
 
 int main(int argc, char* argv[]) {
@@ -503,7 +685,6 @@ int main(int argc, char* argv[]) {
   int initial_bound[4] = { 0, 100, 0, 100 };
   solveforx(&core, initial_bound);
   core.print_all_locations();
-
   // call assign
   vi keyG = core.get_gateKeys();
   vvi leftrightGates = assign(&core, keyG, 0);
@@ -513,27 +694,29 @@ int main(int argc, char* argv[]) {
   cout << "Sorted Left Gates:" << endl;
   cout << leftrightGates[0].size() << " Gates out of " << keyG.size() << endl;
   for (i = 0; i < leftrightGates[0].size(); i++) {
-    cout << leftrightGates[0][i] << " ";
+  cout << leftrightGates[0][i] << " ";
   }
   cout << endl;
 
   cout << "Sorted Right Gates:" << endl;
   cout << leftrightGates[1].size() << " Gates out of " << keyG.size() << endl;
   for (i = 0; i < leftrightGates[1].size(); i++) {
-    cout << leftrightGates[1][i] << " ";
+  cout << leftrightGates[1][i] << " ";
   }
   cout << endl;
 
   // call containNrun
-  int new_bound[4] = { 0, 100, 0, 100 };
-  
+  int left_bound[4] = { initial_bound[0], initial_bound[1]/2, 0, 100 };
+  int right_bound[4] = { initial_bound[1]/2, initial_bound[1], 0, 100 };
+
   cout << "Containing Left Gates:" << endl;
-  new_bound[1] = initial_bound[1]/2;
-  containNrun(&core, leftrightGates[0], new_bound, 0, 0);
-  
+  vvd leftlocs = containNrun(&core, leftrightGates[0], left_bound, 0, 0);
+
   cout << "Containing Right Gates:" << endl;
-  new_bound[0] = new_bound[1];
-  new_bound[1] = initial_bound[1];
-  containNrun(&core, leftrightGates[1], new_bound, 0, 1);
+  vvd rightlocs = containNrun(&core, leftrightGates[1], right_bound, 0, 1);
+
+  core.add_location(leftlocs[0], leftlocs[1], leftrightGates[0], left_bound);
+  core.add_location(rightlocs[0], rightlocs[1], leftrightGates[1], right_bound);
+  core.print_all_locations();
   return 0;
 }
