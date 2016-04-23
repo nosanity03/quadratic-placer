@@ -21,7 +21,7 @@ plt.autoscale(enable=False, axis="xc")
 plt.autoscale(enable=False, axis="yc")
 plt.xlim(-1,101)
 plt.ylim(-1,101)
-plt.scatter(xc,yc, marker='o', s=30, color='red') 
+plt.scatter(xc,yc, marker='o', s=5, color='red') 
 
 plt.grid()
 plt.show()

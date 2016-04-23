@@ -13,17 +13,17 @@
 using namespace std;
 
 typedef vector<vector<int> > vvi;
+typedef vector<vector<double> > vvd;
 typedef vector<int> vi;
 typedef vector<double> vd;
 
 class mothercore{
 	int numG,numP,numN;
-	map <int, vector <int> > gate;
-	map <int, vector <int> > pad;
+  map <int, vi > gate;
+	map <int, vd > pad;
 	map <int, vvi> nets;
 	map <int, double> gateX;
 	map <int, double> gateY;
-	vector <int> sortedgate;
 	
 	public:
 	mothercore(){
@@ -62,15 +62,15 @@ class mothercore{
   // Helper function to return pad keys
   vi get_padKeys() {
     vi v;
-    for(map<int,vi>::iterator it = this->pad.begin(); it != this->pad.end(); ++it) {
+    for(map<int,vd>::iterator it = this->pad.begin(); it != this->pad.end(); ++it) {
       v.push_back(it->first);
     }
     return v;
   }
 
   // Helper function to return pad coordinates
-  vi get_padCoords(int padNum) {
-    vi v;
+  vd get_padCoords(int padNum) {
+    vd v;
     v.push_back(this->pad[padNum][1]); // x coordinate
     v.push_back(this->pad[padNum][2]); // y coordinate
     return v;
@@ -104,6 +104,40 @@ class mothercore{
   // Helper function to return pad connections to a net
   vi get_netPadConns(int netNum) {
     return nets[netNum][1];
+  }
+  
+  // Helper function which makes a new gate and adds list of connections
+  void add_gate(int gateNum, vi listofconnections) {
+    this->gate[gateNum] = listofconnections;
+    this->numG++;
+    return;
+  } 
+	
+  // Helper function which makes a new pad and adds its connections and location
+	void add_pad(int padNum, vd netandlocation) {
+		this->pad[padNum] = netandlocation;
+		this->numP++;
+		return;
+  }
+
+  // Helper function which makes a new net, if needed, and appends a connection to the net 'netnum'
+	void add_net(int netNum, int connection, int gateorpad) {
+		// 0 for gate, 1 for pad
+
+		// if netnum doesn't already exist in dictionary
+    if (this->nets.find(netNum) == this->nets.end()) {
+      vi gates;
+      vi pads;
+      vvi empty_netconn;
+      empty_netconn.push_back(gates);
+      empty_netconn.push_back(pads);
+			this->nets[netNum] = empty_netconn; // first vector for gates, second for pads
+			this->numN += 1;
+    }
+
+		if (gateorpad == 1) this->nets[netNum][1].push_back(connection);
+    else this->nets[netNum][0].push_back(connection);
+    return;
   }
 
   // Helper function which adds location values for given gate keys
@@ -139,113 +173,67 @@ class mothercore{
     }
     cout << endl;
   }
-
-  // Helper function to modify class using file
-  void create (char *filename){
-    ifstream file;
-    file.open(filename);
-    if(!file.is_open()) cout<<"Error in opening file."<<endl;
-    else {
-      cout<<"File opened."<<endl;
-      string line;
-      int line_no=0,word_no,key,no_of_nets,num;
-      while(file.good()){
-        getline(file,line);
-        word_no=0;
-        for(int count=0;count<=line.size();count++){
-          string word="";
-          if((line[count]==' ')||(count==0)){
-            if (count==0) {
-              word.append(&line[count]);
-              word_no++;
-            }	
-            else {
-              word.append(&line[count+1]);
-              word_no++;
-            }	
-            num=atoi(word.c_str());
-            if (line_no==0){
-              if (word_no==1) {
-                numG=num;
-                //cout<<"numG = "<<numG<<endl;
-              }
-              else if (word_no==2){
-                numN=num;
-                //cout<<"numN = "<<numN<<endl;
-                vector <int> gatevec;
-                vector <int> padvec;
-                vector <vector <int> > vec;
-                vec.push_back(gatevec);
-                vec.push_back(padvec);
-                for (int i=0;i<numN;i++) nets[i+1]=vec;
-              }	
-            }
-            else if (line_no<=numG) {
-              if (word_no==1) {
-                key = num;
-                //cout << "Gate no. " << key << " is connected to net no. ";
-                vector <int> vec;
-                gate[key]=vec;
-              }
-              else if (word_no==2) {
-                no_of_nets=num;
-              }
-              else if ((word_no>2)&&(word_no<(no_of_nets+3))) {
-                gate[key].push_back(num);
-                nets[num][0].push_back(key);
-                //cout << gate[key][word_no-3] <<' ';
-              }
-            }
-            else if (line_no==(numG+1)) {
-              if (word_no==1){
-                numP=num;
-                //cout << "numP = " << numP <<endl;
-              }
-            }
-            else if ((line_no>(numG+1))&&(line_no<(numG+2+numP))){
-              if (word_no==1) {
-                key = num;
-                //cout << "Pad no. " << key << " is connected to net no. ";
-                vector <int> vec;
-                pad[key]=vec;
-              }
-              else if (word_no==2) {
-                pad[key].push_back(num);
-                //cout << pad[key][0] <<" at coordinates (";
-                nets[num][1].push_back(key);
-              }
-              else {
-                pad[key].push_back(num);
-                //if (word_no==3) cout << pad[key][1]<<',';
-                //else if (word_no==4) cout << pad[key][2]<<')';
-              }
-            }
-          }
-        }
-        //cout<<endl;
-        line_no++;
-      }
-    }
-    file.close();
-
-    /*
-       for (int i=0;i<numN;i++){
-       cout<<"net "<<i+1<<" is connected to gates ";
-       for (int j=0;j<nets[i+1][0].size();j++){
-       cout<<nets[i+1][0][j]<<' ';
-       }
-       if (nets[i+1][1].size()!=0){
-       cout<<"and to pads ";
-       for (int j=0;j<nets[i+1][1].size();j++){
-       cout<<nets[i+1][1][j]<<' ';
-       }
-       }
-       cout<<endl;
-       }
-       */
-  }
 };
 
+// Creates the "mothercore" class from file
+mothercore create(char *filename) {
+	cout << "Creating data structure from file ..." << endl;
+
+  /////////////////////////////////////////////////////////////////////
+  // Open file
+  ifstream in(filename);
+  streambuf *cinbuf = std::cin.rdbuf(); //save old buf
+  cin.rdbuf(in.rdbuf()); //redirect std::cin to in.txt!
+
+  /////////////////////////////////////////////////////////////////////
+  // New object
+  mothercore returncore;
+
+  /////////////////////////////////////////////////////////////////////
+  // Add gates, nets and pads to object from file
+
+  string line;
+  int numG, numN, numP, numnets, gatenum, padnum, netnum, xloc, yloc, i, j;
+  vi gatevec;
+  vd padvec;
+
+  cin >> numG >> numN;
+  //cout << numG << " " << numN << endl;
+  for (i = 0; i < numG; i++) {
+    cin >> gatenum >> numnets;
+    //cout << gatenum << " " << numnets << " ";
+    for (j = 0; j < numnets; j++) {
+      cin >> netnum;
+      gatevec.push_back(netnum);
+	    returncore.add_net(netnum, gatenum, 0);
+      //cout << netnum << " ";
+    }
+    returncore.add_gate(gatenum, gatevec);
+    gatevec.clear();
+    //cout << endl;
+  }
+  cin >> numP;
+  //cout << numP << endl;
+  for (i = 0; i < numP; i++) {
+    cin >> padnum >> netnum >> xloc >> yloc;
+	  returncore.add_net(netnum, padnum, 1);
+    padvec.push_back(netnum);
+    padvec.push_back(xloc);
+    padvec.push_back(yloc);
+    returncore.add_pad(padnum, padvec);
+    padvec.clear();
+    //cout << padnum << " " << netnum << " " << xloc << " " << yloc << endl;
+  }
+
+  /////////////////////////////////////////////////////////////////////
+  // Close the file
+  cin.rdbuf(cinbuf);   //reset to standard input again
+
+  /////////////////////////////////////////////////////////////////////
+  // Return
+  cout << "Done. Added " << returncore.get_numG() << " gates, " << returncore.get_numP() << " pads, " << returncore.get_numN() << " nets." << endl;
+  return returncore;
+}
 
 vd solve(vi R, vi C, vd V, vd ba) {
   coo_matrix A;
@@ -331,7 +319,8 @@ bool solveforx(mothercore *core, int bound[4]) {
 
   int numgates, numpads;
   double weight;
-  vi gates, pads, padCoordinate;
+  vi gates, pads;
+  vd padCoordinate;
   for(k = 0; k < N; ++k) {
     netval = keyN[k];
     weight = weights[netval];
@@ -370,7 +359,7 @@ bool solveforx(mothercore *core, int bound[4]) {
     }
   }
 
-  /* 
+  /*
      cout << "A:" << endl;
      for (i = 0; i < G; i++) {
      for (j = 0; j < G; j++) {
@@ -388,7 +377,6 @@ bool solveforx(mothercore *core, int bound[4]) {
      for (i = 0; i < G; i++) {
      cout << by[i] << endl;
      }
-
 */
 
   /////////////////////////////////////////////////////////////////////
@@ -493,8 +481,7 @@ int main(int argc, char* argv[]) {
     cout << "Invalid Command: Run as `executable filename`" << endl;
     return -1;
   }
-  mothercore core;
-  core.create(argv[1]);
+  mothercore core = create(argv[1]);
   int initial_bound[4] = { 0, 100, 0, 100 };
   solveforx(&core, initial_bound);
   core.print_all_locations();
