@@ -333,8 +333,8 @@ bool solveforx(mothercore *core, int bound[4]) {
       while (i < numgates-1) {
         j = i+1;
         while (j < numgates) {
-          A[gateorder[gates[i]]][gateorder[gates[j]]] = -weight;
-          A[gateorder[gates[j]]][gateorder[gates[i]]] = -weight;
+          A[gateorder[gates[i]]][gateorder[gates[j]]] += -weight;
+          A[gateorder[gates[j]]][gateorder[gates[i]]] += -weight;
           A[gateorder[gates[i]]][gateorder[gates[i]]] += weight;
           A[gateorder[gates[j]]][gateorder[gates[j]]] += weight;
           j += 1;

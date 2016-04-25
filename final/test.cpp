@@ -154,10 +154,10 @@ class mothercore{
       for (l = 0; l < gatekeys.size(); l++) {
         xloc = x[l];
         yloc = y[l];
-        if (x[l] < bound[0]) xloc = bound[0]; // xmin
-        if (x[l] > bound[1]) xloc = bound[1]; // xmax
-        if (y[l] < bound[2]) yloc = bound[2]; // ymin
-        if (y[l] > bound[3]) yloc = bound[3]; // ymax
+        //if (x[l] < bound[0]) xloc = bound[0]; // xmin
+        //if (x[l] > bound[1]) xloc = bound[1]; // xmax
+        //if (y[l] < bound[2]) yloc = bound[2]; // ymin
+        //if (y[l] > bound[3]) yloc = bound[3]; // ymax
         this->gateX[gatekeys[l]] = xloc;
         this->gateY[gatekeys[l]] = yloc;
       }
@@ -384,8 +384,8 @@ bool solveforx(mothercore *core, int bound[4]) {
       while (i < numgates-1) {
         j = i+1;
         while (j < numgates) {
-          A[gateorder[gates[i]]][gateorder[gates[j]]] = -weight;
-          A[gateorder[gates[j]]][gateorder[gates[i]]] = -weight;
+          A[gateorder[gates[i]]][gateorder[gates[j]]] += -weight;
+          A[gateorder[gates[j]]][gateorder[gates[i]]] += -weight;
           A[gateorder[gates[i]]][gateorder[gates[i]]] += weight;
           A[gateorder[gates[j]]][gateorder[gates[j]]] += weight;
           j += 1;
@@ -410,7 +410,7 @@ bool solveforx(mothercore *core, int bound[4]) {
     }
   }
 
-  /* 
+  /*
      cout << "A:" << endl;
      for (i = 0; i < G; i++) {
      for (j = 0; j < G; j++) {
@@ -428,7 +428,6 @@ bool solveforx(mothercore *core, int bound[4]) {
      for (i = 0; i < G; i++) {
      cout << by[i] << endl;
      }
-
 */
 
   /////////////////////////////////////////////////////////////////////
@@ -650,7 +649,7 @@ vvd containNrun(mothercore *core, vi gatekeys, int bound[4], int hORv, int lORr)
 }
 
 void place(mothercore *core, vi gatekeys, int bound[4], int n) {
-  if (n >= 32) return;
+  if (n >= 8) return;
   else {
     cout << endl;
     cout << endl;
@@ -678,6 +677,7 @@ void place(mothercore *core, vi gatekeys, int bound[4], int n) {
 
     core->add_location(leftlocs[0], leftlocs[1], leftrightGates[0], left_bound);
     core->add_location(rightlocs[0], rightlocs[1], leftrightGates[1], right_bound);
+    //core->print_all_locations();
 
     // sort left half vertically
     cout << endl;
@@ -718,6 +718,7 @@ void place(mothercore *core, vi gatekeys, int bound[4], int n) {
     core->add_location(lefttoplocs[0], lefttoplocs[1], left_topbottomGates[1], lefttop_bound);
     core->add_location(rightbottomlocs[0], rightbottomlocs[1], right_topbottomGates[0], rightbottom_bound);
     core->add_location(righttoplocs[0], righttoplocs[1], right_topbottomGates[1], righttop_bound);
+    //core->print_all_locations();
 
     place(core, left_topbottomGates[0], leftbottom_bound, nnext);
     place(core, left_topbottomGates[1], lefttop_bound, nnext);
@@ -739,6 +740,7 @@ int main(int argc, char* argv[]) {
   
   vi keyG = core.get_gateKeys();
   place(&core, keyG, initial_bound, 1);
+  core.print_all_locations();
   
   writeback(&core, "out.txt");
   return 0;

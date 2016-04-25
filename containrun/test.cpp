@@ -341,6 +341,7 @@ bool solveforx(mothercore *core, int bound[4]) {
   // Gate numbers may vary, this dictionary keeps them in order
   map <int, int> gateorder;
   for(i = 0; i < G; ++i) {
+    //cout << i << " " << keyG[i] << endl;
     gateorder[keyG[i]] = i;
   }
 
@@ -364,8 +365,8 @@ bool solveforx(mothercore *core, int bound[4]) {
       while (i < numgates-1) {
         j = i+1;
         while (j < numgates) {
-          A[gateorder[gates[i]]][gateorder[gates[j]]] = -weight;
-          A[gateorder[gates[j]]][gateorder[gates[i]]] = -weight;
+          A[gateorder[gates[i]]][gateorder[gates[j]]] += -weight;
+          A[gateorder[gates[j]]][gateorder[gates[i]]] += -weight;
           A[gateorder[gates[i]]][gateorder[gates[i]]] += weight;
           A[gateorder[gates[j]]][gateorder[gates[j]]] += weight;
           j += 1;
@@ -381,6 +382,7 @@ bool solveforx(mothercore *core, int bound[4]) {
         while (j < numpads) {
           A[gateorder[gates[i]]][gateorder[gates[i]]] += weight;
           padCoordinate = core->get_padCoords(pads[j]);
+          //cout << "Net: " << netval << " Gate: " << gates[i] << " " << weight << " " << padCoordinate[0] << " " << padCoordinate[1] << endl;
           bx[gateorder[gates[i]]] += weight*padCoordinate[0];
           by[gateorder[gates[i]]] += weight*padCoordinate[1];
           j += 1;
@@ -390,11 +392,11 @@ bool solveforx(mothercore *core, int bound[4]) {
     }
   }
 
-  /* 
+  /*
      cout << "A:" << endl;
      for (i = 0; i < G; i++) {
      for (j = 0; j < G; j++) {
-     cout << A[i][j] << " ";
+     cout << fixed << float(A[i][j]) << "\t";
      }
      cout << endl;
      }
@@ -408,7 +410,6 @@ bool solveforx(mothercore *core, int bound[4]) {
      for (i = 0; i < G; i++) {
      cout << by[i] << endl;
      }
-
 */
 
   /////////////////////////////////////////////////////////////////////
