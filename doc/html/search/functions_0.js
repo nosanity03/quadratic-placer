@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['get_5fgateconnections',['get_gateconnections',['../classmothercore.html#a8aabd0cfa0d3847847479d38324cda08',1,'mothercore']]],
-  ['get_5fgatecoords',['get_gateCoords',['../classmothercore.html#ab6b8c312d6900e5d00e8e27dd71dd0a7',1,'mothercore']]],
-  ['get_5fgatekeys',['get_gateKeys',['../classmothercore.html#a70c3317ac95e5633a546c559cab115af',1,'mothercore']]],
-  ['get_5fnumg',['get_numG',['../classmothercore.html#a09c4a400c467d3919410e60059ce6d6b',1,'mothercore']]],
-  ['get_5fnump',['get_numP',['../classmothercore.html#a7c2f3835bf93b1eb4362ed3c2a337059',1,'mothercore']]]
+  ['add_5fgate',['add_gate',['../classmothercore.html#a63e5b0b6f6bc0da68773f8d5be644ad1',1,'mothercore']]],
+  ['add_5flocation',['add_location',['../classmothercore.html#a850753340ba6043464b7a93d6bf58124',1,'mothercore']]],
+  ['add_5fnet',['add_net',['../classmothercore.html#a43d5c569faafb37f221a8c40252f4bb0',1,'mothercore']]],
+  ['add_5fpad',['add_pad',['../classmothercore.html#a5582864a594c614cffce53cdf41f74c2',1,'mothercore']]],
+  ['assign',['assign',['../qplacer_8cpp.html#a377fdd56932efc9e384dfd4c71bcb16b',1,'qplacer.cpp']]]
 ];

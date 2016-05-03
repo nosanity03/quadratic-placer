@@ -1,0 +1,257 @@
+\hypertarget{qplacer_8cpp}{}\section{qplacer.\+cpp File Reference}
+\label{qplacer_8cpp}\index{qplacer.\+cpp@{qplacer.\+cpp}}
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$valarray$>$}\\*
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include \char`\"{}solver.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmothercore}{mothercore}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef vector$<$ vector$<$ int $>$ $>$ \hyperlink{qplacer_8cpp_accbf8abb54b0735d3ff50f4df4f45cb2}{vvi}
+\item 
+typedef vector$<$ vector$<$ double $>$ $>$ \hyperlink{qplacer_8cpp_a81afaa7cd3e8a4f1f3ff6300860a04f0}{vvd}
+\item 
+typedef vector$<$ int $>$ \hyperlink{qplacer_8cpp_a2954e26aee7d16c4a58d5cfb5571ea7e}{vi}
+\item 
+typedef vector$<$ double $>$ \hyperlink{qplacer_8cpp_a2f3b3a0095b65103cd56cf292e85fb85}{vd}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmothercore}{mothercore} \hyperlink{qplacer_8cpp_a11a2b8b533796780c25f793cbfe2d3ad}{create} (char $\ast$filename)
+\item 
+void \hyperlink{qplacer_8cpp_a2b8ad5ece1a644968e5b1bdf55155474}{writeback} (\hyperlink{classmothercore}{mothercore} $\ast$core, char $\ast$filename)
+\item 
+void \hyperlink{qplacer_8cpp_af42899ac7fb4a6fac4895d0c27ebfa4f}{writebackpads} (\hyperlink{classmothercore}{mothercore} $\ast$core, char $\ast$filename)
+\item 
+\hyperlink{qplacer_8cpp_a2f3b3a0095b65103cd56cf292e85fb85}{vd} \hyperlink{qplacer_8cpp_aacc5f8f76d8751fe242d6716520beee7}{solve} (\hyperlink{qplacer_8cpp_a2954e26aee7d16c4a58d5cfb5571ea7e}{vi} R, \hyperlink{qplacer_8cpp_a2954e26aee7d16c4a58d5cfb5571ea7e}{vi} C, \hyperlink{qplacer_8cpp_a2f3b3a0095b65103cd56cf292e85fb85}{vd} V, \hyperlink{qplacer_8cpp_a2f3b3a0095b65103cd56cf292e85fb85}{vd} ba)
+\item 
+bool \hyperlink{qplacer_8cpp_a19453e4ec261b1e4fc46a261098f144c}{solveforx} (\hyperlink{classmothercore}{mothercore} $\ast$core, int bound\mbox{[}4\mbox{]})
+\item 
+\hyperlink{qplacer_8cpp_accbf8abb54b0735d3ff50f4df4f45cb2}{vvi} \hyperlink{qplacer_8cpp_a377fdd56932efc9e384dfd4c71bcb16b}{assign} (\hyperlink{classmothercore}{mothercore} $\ast$core, \hyperlink{qplacer_8cpp_a2954e26aee7d16c4a58d5cfb5571ea7e}{vi} gatekeys, int h\+O\+Rv)
+\item 
+void \hyperlink{qplacer_8cpp_a4d8fbc274da0df79454cb2c5dab0b5ec}{update\+\_\+coordinates} (\hyperlink{qplacer_8cpp_a2f3b3a0095b65103cd56cf292e85fb85}{vd} $\ast$padlocation, int bound\mbox{[}4\mbox{]})
+\item 
+\hyperlink{qplacer_8cpp_a81afaa7cd3e8a4f1f3ff6300860a04f0}{vvd} \hyperlink{qplacer_8cpp_a74c994993f7b7a62dba67e8e4a5f0f00}{contain\+Nrun} (\hyperlink{classmothercore}{mothercore} $\ast$core, \hyperlink{qplacer_8cpp_a2954e26aee7d16c4a58d5cfb5571ea7e}{vi} gatekeys, int bound\mbox{[}4\mbox{]}, int h\+O\+Rv, int l\+O\+Rr)
+\item 
+void \hyperlink{qplacer_8cpp_a8968bf8d0b151cae38761650f335ced1}{place} (\hyperlink{classmothercore}{mothercore} $\ast$core, \hyperlink{qplacer_8cpp_a2954e26aee7d16c4a58d5cfb5571ea7e}{vi} gatekeys, int bound\mbox{[}4\mbox{]}, int n)
+\item 
+int \hyperlink{qplacer_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!vd@{vd}}
+\index{vd@{vd}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{vd}]{\setlength{\rightskip}{0pt plus 5cm}typedef vector$<$double$>$ {\bf vd}}\hypertarget{qplacer_8cpp_a2f3b3a0095b65103cd56cf292e85fb85}{}\label{qplacer_8cpp_a2f3b3a0095b65103cd56cf292e85fb85}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!vi@{vi}}
+\index{vi@{vi}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{vi}]{\setlength{\rightskip}{0pt plus 5cm}typedef vector$<$int$>$ {\bf vi}}\hypertarget{qplacer_8cpp_a2954e26aee7d16c4a58d5cfb5571ea7e}{}\label{qplacer_8cpp_a2954e26aee7d16c4a58d5cfb5571ea7e}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!vvd@{vvd}}
+\index{vvd@{vvd}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{vvd}]{\setlength{\rightskip}{0pt plus 5cm}typedef vector$<$vector$<$double$>$ $>$ {\bf vvd}}\hypertarget{qplacer_8cpp_a81afaa7cd3e8a4f1f3ff6300860a04f0}{}\label{qplacer_8cpp_a81afaa7cd3e8a4f1f3ff6300860a04f0}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!vvi@{vvi}}
+\index{vvi@{vvi}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{vvi}]{\setlength{\rightskip}{0pt plus 5cm}typedef vector$<$vector$<$int$>$ $>$ {\bf vvi}}\hypertarget{qplacer_8cpp_accbf8abb54b0735d3ff50f4df4f45cb2}{}\label{qplacer_8cpp_accbf8abb54b0735d3ff50f4df4f45cb2}
+
+
+\subsection{Function Documentation}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!assign@{assign}}
+\index{assign@{assign}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{assign(mothercore $\ast$core, vi gatekeys, int h\+O\+Rv)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vvi} assign (
+\begin{DoxyParamCaption}
+\item[{{\bf mothercore} $\ast$}]{core, }
+\item[{{\bf vi}}]{gatekeys, }
+\item[{int}]{h\+O\+Rv}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_a377fdd56932efc9e384dfd4c71bcb16b}{}\label{qplacer_8cpp_a377fdd56932efc9e384dfd4c71bcb16b}
+Function which sorts given gates according to their locations, horizontally or vertically. Horizontally if h\+O\+Rv = 0; Vertically if h\+O\+Rv = 1 
+\begin{DoxyParams}{Parameters}
+{\em core} & Pointer to an object of class \char`\"{}mothercore\char`\"{}. \\
+\hline
+{\em gatekeys} & Vector of gate-\/ids of gates that need to be sorted. \\
+\hline
+{\em h\+O\+Rv} & It is used to decide if the sorting is done based on x-\/coordinate or y-\/coordinate. If h\+O\+Rv = 0, x-\/coordinate is used, and if it is 1, y-\/coordinate is used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector of 2 vectors. First vector contains the gate-\/ids which are on the lower values of the sorting coordinate. The second vector contains the gate-\/ids which are on the higher values of the sorting coordinate. 
+\end{DoxyReturn}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!contain\+Nrun@{contain\+Nrun}}
+\index{contain\+Nrun@{contain\+Nrun}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{contain\+Nrun(mothercore $\ast$core, vi gatekeys, int bound[4], int h\+O\+Rv, int l\+O\+Rr)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vvd} contain\+Nrun (
+\begin{DoxyParamCaption}
+\item[{{\bf mothercore} $\ast$}]{core, }
+\item[{{\bf vi}}]{gatekeys, }
+\item[{int}]{bound\mbox{[}4\mbox{]}, }
+\item[{int}]{h\+O\+Rv, }
+\item[{int}]{l\+O\+Rr}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_a74c994993f7b7a62dba67e8e4a5f0f00}{}\label{qplacer_8cpp_a74c994993f7b7a62dba67e8e4a5f0f00}
+Function which contains the given gate-\/ids within the given bound, creates virtual pads, and runs the resulting mothercore object. 
+\begin{DoxyParams}{Parameters}
+{\em core} & Pointer to an object of class \char`\"{}mothercore\char`\"{}. \\
+\hline
+{\em gatekeys} & Vector of gate-\/ids of gates that need to be contained within the given bound. \\
+\hline
+{\em bound} & The minimum and maximum values of the x, y coordinates desired. It is an array of 4 numbers, \mbox{[}x\+\_\+min, x\+\_\+max, y\+\_\+min, y\+\_\+max\mbox{]}. \\
+\hline
+{\em h\+O\+Rv} & It is used to correct the coordinate of some virtual pads. h\+O\+Rv = 0 means that the present bound is the result of a horizontal cut. h\+O\+Rv = 1 means that the present bound is the result of a vertical cut. \\
+\hline
+{\em l\+O\+Rr} & It is used to correct the coordinate of some virtual pads. l\+O\+Rr = 0 means that the present gate-\/ids are present in the lower part of a cut. l\+O\+Rr = 1 means that the present gate-\/ids are present in the higher part of a cut. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new locations of the gates whose gate-\/ids are in \char`\"{}gatekeys\char`\"{}. 
+\end{DoxyReturn}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!create@{create}}
+\index{create@{create}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{create(char $\ast$filename)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mothercore} create (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_a11a2b8b533796780c25f793cbfe2d3ad}{}\label{qplacer_8cpp_a11a2b8b533796780c25f793cbfe2d3ad}
+Function which creates an object of class \char`\"{}mothercore\char`\"{} from a given file. 
+\begin{DoxyParams}{Parameters}
+{\em filename} & Pointer to the name of a file where the input is located. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An object of class mothercore. 
+\end{DoxyReturn}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!main@{main}}
+\index{main@{main}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{main(int argc, char $\ast$argv[])}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{}\label{qplacer_8cpp_a0ddf1224851353fc92bfbff6f499fa97}
+The main function\+: It creates a new mothercore object from a file and runs place for recursive placing. Final placement is written back to an output file using writeback and writebackpads. \index{qplacer.\+cpp@{qplacer.\+cpp}!place@{place}}
+\index{place@{place}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{place(mothercore $\ast$core, vi gatekeys, int bound[4], int n)}]{\setlength{\rightskip}{0pt plus 5cm}void place (
+\begin{DoxyParamCaption}
+\item[{{\bf mothercore} $\ast$}]{core, }
+\item[{{\bf vi}}]{gatekeys, }
+\item[{int}]{bound\mbox{[}4\mbox{]}, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_a8968bf8d0b151cae38761650f335ced1}{}\label{qplacer_8cpp_a8968bf8d0b151cae38761650f335ced1}
+Function which recursively calls itself to place the given gates within the bound. The bound keeps shortening as the depth of the recursion increases. Also the number of gates in each bound decreases as the depth of the recursion increases. It aims to find a uniform distribution of the gates in all the divisions of the A\+S\+IC. 
+\begin{DoxyParams}{Parameters}
+{\em core} & Pointer to an object of class \char`\"{}mothercore\char`\"{}. \\
+\hline
+{\em gatekeys} & Vector of gate-\/ids of gates that need to be placed within the given bound. \\
+\hline
+{\em bound} & The minimum and maximum values of the x, y coordinates desired. It is an array of 4 numbers, \mbox{[}x\+\_\+min, x\+\_\+max, y\+\_\+min, y\+\_\+max\mbox{]}. \\
+\hline
+{\em n} & The level of the iteration. A nth iteration means that there are 2$^\wedge$n divisions in the A\+S\+IC. \\
+\hline
+\end{DoxyParams}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!solve@{solve}}
+\index{solve@{solve}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{solve(vi R, vi C, vd V, vd ba)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vd} solve (
+\begin{DoxyParamCaption}
+\item[{{\bf vi}}]{R, }
+\item[{{\bf vi}}]{C, }
+\item[{{\bf vd}}]{V, }
+\item[{{\bf vd}}]{ba}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_aacc5f8f76d8751fe242d6716520beee7}{}\label{qplacer_8cpp_aacc5f8f76d8751fe242d6716520beee7}
+Function which solves a sparse matrix, of the form Ax=b, using \hyperlink{classcoo__matrix}{coo\+\_\+matrix} class from \hyperlink{solver_8h}{solver.\+h}. 
+\begin{DoxyParams}{Parameters}
+{\em R} & Vector containing non-\/zero row values of the matrix A, in order. \\
+\hline
+{\em C} & Vector containing non-\/zero column values of the matrix A, in order. \\
+\hline
+{\em V} & Vector containing non-\/zero values of the matrix A, in order. \\
+\hline
+{\em ba} & Vector containing the b vector in the matrix form Ax=b. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector containing values of the solved vector x in the form Ax=b. 
+\end{DoxyReturn}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!solveforx@{solveforx}}
+\index{solveforx@{solveforx}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{solveforx(mothercore $\ast$core, int bound[4])}]{\setlength{\rightskip}{0pt plus 5cm}bool solveforx (
+\begin{DoxyParamCaption}
+\item[{{\bf mothercore} $\ast$}]{core, }
+\item[{int}]{bound\mbox{[}4\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_a19453e4ec261b1e4fc46a261098f144c}{}\label{qplacer_8cpp_a19453e4ec261b1e4fc46a261098f144c}
+Function which generates the A matrix and b vector for each coordinate, from an object of the class mothercore and sends it to solve for solving. The result is written back to the mothercore object. 
+\begin{DoxyParams}{Parameters}
+{\em core} & Pointer to an object of class \char`\"{}mothercore\char`\"{}. \\
+\hline
+{\em bound} & The minimum and maximum values of the x, y coordinates desired. It is an array of 4 numbers, \mbox{[}x\+\_\+min, x\+\_\+max, y\+\_\+min, y\+\_\+max\mbox{]}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{qplacer_8cpp_aacc5f8f76d8751fe242d6716520beee7}{solve(vi R, vi C, vd V, vd ba)} 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+True if there are no errors, false otherwise. 
+\end{DoxyReturn}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!update\+\_\+coordinates@{update\+\_\+coordinates}}
+\index{update\+\_\+coordinates@{update\+\_\+coordinates}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{update\+\_\+coordinates(vd $\ast$padlocation, int bound[4])}]{\setlength{\rightskip}{0pt plus 5cm}void update\+\_\+coordinates (
+\begin{DoxyParamCaption}
+\item[{{\bf vd} $\ast$}]{padlocation, }
+\item[{int}]{bound\mbox{[}4\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_a4d8fbc274da0df79454cb2c5dab0b5ec}{}\label{qplacer_8cpp_a4d8fbc274da0df79454cb2c5dab0b5ec}
+Function which updates the coordinates of the given x, y coordinates according to the given bound. 
+\begin{DoxyParams}{Parameters}
+{\em padlocation} & Pointer to a vector containing x, y coordinates. \\
+\hline
+{\em bound} & The minimum and maximum values of the x, y coordinates desired. It is an array of 4 numbers, \mbox{[}x\+\_\+min, x\+\_\+max, y\+\_\+min, y\+\_\+max\mbox{]}. \\
+\hline
+\end{DoxyParams}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!writeback@{writeback}}
+\index{writeback@{writeback}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{writeback(mothercore $\ast$core, char $\ast$filename)}]{\setlength{\rightskip}{0pt plus 5cm}void writeback (
+\begin{DoxyParamCaption}
+\item[{{\bf mothercore} $\ast$}]{core, }
+\item[{char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_a2b8ad5ece1a644968e5b1bdf55155474}{}\label{qplacer_8cpp_a2b8ad5ece1a644968e5b1bdf55155474}
+Function which writes the location of gates in an object of class \char`\"{}mothercore\char`\"{} to a file. 
+\begin{DoxyParams}{Parameters}
+{\em core} & Pointer to an object of class \char`\"{}mothercore\char`\"{}. \\
+\hline
+{\em filename} & Pointer to the name of a file where the output is to be written. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{qplacer_8cpp_af42899ac7fb4a6fac4895d0c27ebfa4f}{writebackpads(mothercore $\ast$core, char $\ast$filename)} 
+\end{DoxySeeAlso}
+\index{qplacer.\+cpp@{qplacer.\+cpp}!writebackpads@{writebackpads}}
+\index{writebackpads@{writebackpads}!qplacer.\+cpp@{qplacer.\+cpp}}
+\subsubsection[{writebackpads(mothercore $\ast$core, char $\ast$filename)}]{\setlength{\rightskip}{0pt plus 5cm}void writebackpads (
+\begin{DoxyParamCaption}
+\item[{{\bf mothercore} $\ast$}]{core, }
+\item[{char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}\hypertarget{qplacer_8cpp_af42899ac7fb4a6fac4895d0c27ebfa4f}{}\label{qplacer_8cpp_af42899ac7fb4a6fac4895d0c27ebfa4f}
+Function which writes the location of pads in an object of class \char`\"{}mothercore\char`\"{} to a file. 
+\begin{DoxyParams}{Parameters}
+{\em core} & Pointer to an object of class \char`\"{}mothercore\char`\"{}. \\
+\hline
+{\em filename} & Pointer to the name of a file where the output is to be written. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{qplacer_8cpp_a2b8ad5ece1a644968e5b1bdf55155474}{writeback(mothercore $\ast$core, char $\ast$filename)} 
+\end{DoxySeeAlso}

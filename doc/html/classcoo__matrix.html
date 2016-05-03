@@ -89,40 +89,164 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">coo_matrix Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="solver_8h_source.html">solver.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aca6aed56a99ab4664c8c0f5871606a10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca6aed56a99ab4664c8c0f5871606a10"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>read_coo_matrix</b> (const char *fname)</td></tr>
+<tr class="memitem:aca6aed56a99ab4664c8c0f5871606a10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoo__matrix.html#aca6aed56a99ab4664c8c0f5871606a10">read_coo_matrix</a> (const char *fname)</td></tr>
 <tr class="separator:aca6aed56a99ab4664c8c0f5871606a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a650551ff097541e73d1fc89c0dd9694c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a650551ff097541e73d1fc89c0dd9694c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>matvec</b> (const valarray&lt; double &gt; &amp;x, valarray&lt; double &gt; &amp;y)</td></tr>
+<tr class="memitem:a650551ff097541e73d1fc89c0dd9694c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoo__matrix.html#a650551ff097541e73d1fc89c0dd9694c">matvec</a> (const valarray&lt; double &gt; &amp;x, valarray&lt; double &gt; &amp;y)</td></tr>
 <tr class="separator:a650551ff097541e73d1fc89c0dd9694c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0cf916f9fa1c07e774c37d41407245c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0cf916f9fa1c07e774c37d41407245c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>solve</b> (const valarray&lt; double &gt; &amp;b, valarray&lt; double &gt; &amp;x)</td></tr>
+<tr class="memitem:ac0cf916f9fa1c07e774c37d41407245c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoo__matrix.html#ac0cf916f9fa1c07e774c37d41407245c">solve</a> (const valarray&lt; double &gt; &amp;b, valarray&lt; double &gt; &amp;x)</td></tr>
 <tr class="separator:ac0cf916f9fa1c07e774c37d41407245c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a6148ebf053576f70747dc3e260f25ea5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6148ebf053576f70747dc3e260f25ea5"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>n</b></td></tr>
+<tr class="memitem:a6148ebf053576f70747dc3e260f25ea5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoo__matrix.html#a6148ebf053576f70747dc3e260f25ea5">n</a></td></tr>
 <tr class="separator:a6148ebf053576f70747dc3e260f25ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52ecd103d6c673a7e26457d29055fb3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52ecd103d6c673a7e26457d29055fb3c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>nnz</b></td></tr>
+<tr class="memitem:a52ecd103d6c673a7e26457d29055fb3c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoo__matrix.html#a52ecd103d6c673a7e26457d29055fb3c">nnz</a></td></tr>
 <tr class="separator:a52ecd103d6c673a7e26457d29055fb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1e40669007eeeedcad75eb5606df654"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1e40669007eeeedcad75eb5606df654"></a>
-valarray&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>row</b></td></tr>
+<tr class="memitem:ad1e40669007eeeedcad75eb5606df654"><td class="memItemLeft" align="right" valign="top">valarray&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoo__matrix.html#ad1e40669007eeeedcad75eb5606df654">row</a></td></tr>
 <tr class="separator:ad1e40669007eeeedcad75eb5606df654"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae49b54893e4b096df04e9b6a5ce02923"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae49b54893e4b096df04e9b6a5ce02923"></a>
-valarray&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>col</b></td></tr>
+<tr class="memitem:ae49b54893e4b096df04e9b6a5ce02923"><td class="memItemLeft" align="right" valign="top">valarray&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoo__matrix.html#ae49b54893e4b096df04e9b6a5ce02923">col</a></td></tr>
 <tr class="separator:ae49b54893e4b096df04e9b6a5ce02923"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab819a816424fa585d028739b5318959a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab819a816424fa585d028739b5318959a"></a>
-valarray&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dat</b></td></tr>
+<tr class="memitem:ab819a816424fa585d028739b5318959a"><td class="memItemLeft" align="right" valign="top">valarray&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoo__matrix.html#ab819a816424fa585d028739b5318959a">dat</a></td></tr>
 <tr class="separator:ab819a816424fa585d028739b5318959a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a650551ff097541e73d1fc89c0dd9694c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void coo_matrix::matvec </td>
+          <td>(</td>
+          <td class="paramtype">const valarray&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">valarray&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aca6aed56a99ab4664c8c0f5871606a10"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void coo_matrix::read_coo_matrix </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac0cf916f9fa1c07e774c37d41407245c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void coo_matrix::solve </td>
+          <td>(</td>
+          <td class="paramtype">const valarray&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">valarray&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ae49b54893e4b096df04e9b6a5ce02923"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">valarray&lt;int&gt; coo_matrix::col</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab819a816424fa585d028739b5318959a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">valarray&lt;double&gt; coo_matrix::dat</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6148ebf053576f70747dc3e260f25ea5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int coo_matrix::n</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a52ecd103d6c673a7e26457d29055fb3c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int coo_matrix::nnz</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad1e40669007eeeedcad75eb5606df654"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">valarray&lt;int&gt; coo_matrix::row</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="solver_8h_source.html">solver.h</a></li>
-<li>solver.cpp</li>
+<li><a class="el" href="solver_8cpp.html">solver.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

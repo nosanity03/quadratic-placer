@@ -1,38 +1,78 @@
 \hypertarget{classcoo__matrix}{}\section{coo\+\_\+matrix Class Reference}
 \label{classcoo__matrix}\index{coo\+\_\+matrix@{coo\+\_\+matrix}}
+
+
+{\ttfamily \#include $<$solver.\+h$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void {\bfseries read\+\_\+coo\+\_\+matrix} (const char $\ast$fname)\hypertarget{classcoo__matrix_aca6aed56a99ab4664c8c0f5871606a10}{}\label{classcoo__matrix_aca6aed56a99ab4664c8c0f5871606a10}
-
+void \hyperlink{classcoo__matrix_aca6aed56a99ab4664c8c0f5871606a10}{read\+\_\+coo\+\_\+matrix} (const char $\ast$fname)
 \item 
-void {\bfseries matvec} (const valarray$<$ double $>$ \&x, valarray$<$ double $>$ \&y)\hypertarget{classcoo__matrix_a650551ff097541e73d1fc89c0dd9694c}{}\label{classcoo__matrix_a650551ff097541e73d1fc89c0dd9694c}
-
+void \hyperlink{classcoo__matrix_a650551ff097541e73d1fc89c0dd9694c}{matvec} (const valarray$<$ double $>$ \&x, valarray$<$ double $>$ \&y)
 \item 
-void {\bfseries solve} (const valarray$<$ double $>$ \&b, valarray$<$ double $>$ \&x)\hypertarget{classcoo__matrix_ac0cf916f9fa1c07e774c37d41407245c}{}\label{classcoo__matrix_ac0cf916f9fa1c07e774c37d41407245c}
-
+void \hyperlink{classcoo__matrix_ac0cf916f9fa1c07e774c37d41407245c}{solve} (const valarray$<$ double $>$ \&b, valarray$<$ double $>$ \&x)
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-int {\bfseries n}\hypertarget{classcoo__matrix_a6148ebf053576f70747dc3e260f25ea5}{}\label{classcoo__matrix_a6148ebf053576f70747dc3e260f25ea5}
-
+int \hyperlink{classcoo__matrix_a6148ebf053576f70747dc3e260f25ea5}{n}
 \item 
-int {\bfseries nnz}\hypertarget{classcoo__matrix_a52ecd103d6c673a7e26457d29055fb3c}{}\label{classcoo__matrix_a52ecd103d6c673a7e26457d29055fb3c}
-
+int \hyperlink{classcoo__matrix_a52ecd103d6c673a7e26457d29055fb3c}{nnz}
 \item 
-valarray$<$ int $>$ {\bfseries row}\hypertarget{classcoo__matrix_ad1e40669007eeeedcad75eb5606df654}{}\label{classcoo__matrix_ad1e40669007eeeedcad75eb5606df654}
-
+valarray$<$ int $>$ \hyperlink{classcoo__matrix_ad1e40669007eeeedcad75eb5606df654}{row}
 \item 
-valarray$<$ int $>$ {\bfseries col}\hypertarget{classcoo__matrix_ae49b54893e4b096df04e9b6a5ce02923}{}\label{classcoo__matrix_ae49b54893e4b096df04e9b6a5ce02923}
-
+valarray$<$ int $>$ \hyperlink{classcoo__matrix_ae49b54893e4b096df04e9b6a5ce02923}{col}
 \item 
-valarray$<$ double $>$ {\bfseries dat}\hypertarget{classcoo__matrix_ab819a816424fa585d028739b5318959a}{}\label{classcoo__matrix_ab819a816424fa585d028739b5318959a}
-
+valarray$<$ double $>$ \hyperlink{classcoo__matrix_ab819a816424fa585d028739b5318959a}{dat}
 \end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\index{coo\+\_\+matrix@{coo\+\_\+matrix}!matvec@{matvec}}
+\index{matvec@{matvec}!coo\+\_\+matrix@{coo\+\_\+matrix}}
+\subsubsection[{matvec(const valarray$<$ double $>$ \&x, valarray$<$ double $>$ \&y)}]{\setlength{\rightskip}{0pt plus 5cm}void coo\+\_\+matrix\+::matvec (
+\begin{DoxyParamCaption}
+\item[{const valarray$<$ double $>$ \&}]{x, }
+\item[{valarray$<$ double $>$ \&}]{y}
+\end{DoxyParamCaption}
+)}\hypertarget{classcoo__matrix_a650551ff097541e73d1fc89c0dd9694c}{}\label{classcoo__matrix_a650551ff097541e73d1fc89c0dd9694c}
+\index{coo\+\_\+matrix@{coo\+\_\+matrix}!read\+\_\+coo\+\_\+matrix@{read\+\_\+coo\+\_\+matrix}}
+\index{read\+\_\+coo\+\_\+matrix@{read\+\_\+coo\+\_\+matrix}!coo\+\_\+matrix@{coo\+\_\+matrix}}
+\subsubsection[{read\+\_\+coo\+\_\+matrix(const char $\ast$fname)}]{\setlength{\rightskip}{0pt plus 5cm}void coo\+\_\+matrix\+::read\+\_\+coo\+\_\+matrix (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fname}
+\end{DoxyParamCaption}
+)}\hypertarget{classcoo__matrix_aca6aed56a99ab4664c8c0f5871606a10}{}\label{classcoo__matrix_aca6aed56a99ab4664c8c0f5871606a10}
+\index{coo\+\_\+matrix@{coo\+\_\+matrix}!solve@{solve}}
+\index{solve@{solve}!coo\+\_\+matrix@{coo\+\_\+matrix}}
+\subsubsection[{solve(const valarray$<$ double $>$ \&b, valarray$<$ double $>$ \&x)}]{\setlength{\rightskip}{0pt plus 5cm}void coo\+\_\+matrix\+::solve (
+\begin{DoxyParamCaption}
+\item[{const valarray$<$ double $>$ \&}]{b, }
+\item[{valarray$<$ double $>$ \&}]{x}
+\end{DoxyParamCaption}
+)}\hypertarget{classcoo__matrix_ac0cf916f9fa1c07e774c37d41407245c}{}\label{classcoo__matrix_ac0cf916f9fa1c07e774c37d41407245c}
+
+
+\subsection{Member Data Documentation}
+\index{coo\+\_\+matrix@{coo\+\_\+matrix}!col@{col}}
+\index{col@{col}!coo\+\_\+matrix@{coo\+\_\+matrix}}
+\subsubsection[{col}]{\setlength{\rightskip}{0pt plus 5cm}valarray$<$int$>$ coo\+\_\+matrix\+::col}\hypertarget{classcoo__matrix_ae49b54893e4b096df04e9b6a5ce02923}{}\label{classcoo__matrix_ae49b54893e4b096df04e9b6a5ce02923}
+\index{coo\+\_\+matrix@{coo\+\_\+matrix}!dat@{dat}}
+\index{dat@{dat}!coo\+\_\+matrix@{coo\+\_\+matrix}}
+\subsubsection[{dat}]{\setlength{\rightskip}{0pt plus 5cm}valarray$<$double$>$ coo\+\_\+matrix\+::dat}\hypertarget{classcoo__matrix_ab819a816424fa585d028739b5318959a}{}\label{classcoo__matrix_ab819a816424fa585d028739b5318959a}
+\index{coo\+\_\+matrix@{coo\+\_\+matrix}!n@{n}}
+\index{n@{n}!coo\+\_\+matrix@{coo\+\_\+matrix}}
+\subsubsection[{n}]{\setlength{\rightskip}{0pt plus 5cm}int coo\+\_\+matrix\+::n}\hypertarget{classcoo__matrix_a6148ebf053576f70747dc3e260f25ea5}{}\label{classcoo__matrix_a6148ebf053576f70747dc3e260f25ea5}
+\index{coo\+\_\+matrix@{coo\+\_\+matrix}!nnz@{nnz}}
+\index{nnz@{nnz}!coo\+\_\+matrix@{coo\+\_\+matrix}}
+\subsubsection[{nnz}]{\setlength{\rightskip}{0pt plus 5cm}int coo\+\_\+matrix\+::nnz}\hypertarget{classcoo__matrix_a52ecd103d6c673a7e26457d29055fb3c}{}\label{classcoo__matrix_a52ecd103d6c673a7e26457d29055fb3c}
+\index{coo\+\_\+matrix@{coo\+\_\+matrix}!row@{row}}
+\index{row@{row}!coo\+\_\+matrix@{coo\+\_\+matrix}}
+\subsubsection[{row}]{\setlength{\rightskip}{0pt plus 5cm}valarray$<$int$>$ coo\+\_\+matrix\+::row}\hypertarget{classcoo__matrix_ad1e40669007eeeedcad75eb5606df654}{}\label{classcoo__matrix_ad1e40669007eeeedcad75eb5606df654}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-solver.\+h\item 
-solver.\+cpp\end{DoxyCompactItemize}
+\hyperlink{solver_8h}{solver.\+h}\item 
+\hyperlink{solver_8cpp}{solver.\+cpp}\end{DoxyCompactItemize}
