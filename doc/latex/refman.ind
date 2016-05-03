@@ -1,0 +1,28 @@
+\begin{theindex}
+
+  \item {coo\+\_\+matrix}, \hyperpage{3}
+
+  \indexspace
+
+  \item {get\+\_\+gate\+Coords}
+    \subitem {mothercore}, \hyperpage{4}
+  \item {get\+\_\+gate\+Keys}
+    \subitem {mothercore}, \hyperpage{4}
+  \item {get\+\_\+gateconnections}
+    \subitem {mothercore}, \hyperpage{4}
+  \item {get\+\_\+numG}
+    \subitem {mothercore}, \hyperpage{5}
+  \item {get\+\_\+numP}
+    \subitem {mothercore}, \hyperpage{5}
+
+  \indexspace
+
+  \item {mothercore}, \hyperpage{3}
+    \subitem {get\+\_\+gate\+Coords}, \hyperpage{4}
+    \subitem {get\+\_\+gate\+Keys}, \hyperpage{4}
+    \subitem {get\+\_\+gateconnections}, \hyperpage{4}
+    \subitem {get\+\_\+numG}, \hyperpage{5}
+    \subitem {get\+\_\+numP}, \hyperpage{5}
+    \subitem {mothercore}, \hyperpage{4}
+
+\end{theindex}

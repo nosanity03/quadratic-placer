@@ -1,7 +1,15 @@
-generate: ../modifiedPlacer/gqp_placer.py
-	cp ../modifiedPlacer/gqp_placer.py .
+generate: ../qplacer.cpp ../solver.cpp ../solver.h
+	cp ../qplacer.cpp .
+	cp ../solver.cpp .
+	cp ../solver.h .
 	doxygen docconfig
 	google-chrome ./html/index.html
+	cd latex/; make
+	cp ./latex/refman.pdf reference_manual.pdf
+	rm -f *.log
 
-createnew: 
+clean:
+	rm -rf qplacer.cpp solver.h solver.cpp *.log
+
+new: 
 	doxygen -g docconfig
