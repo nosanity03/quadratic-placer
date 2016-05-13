@@ -5,8 +5,8 @@ ifdef N
 endif
 	g++ -std=c++11 -o qplacer qplacer.cpp solver.cpp
 
-show: out.txt outpad.txt ./visualization/visualize.py
-	python ./visualization/visualize.py out.txt outpad.txt
+show: out.txt outpad.txt visualizer.py
+	python visualizer.py out.txt outpad.txt
 
 clean:
 	rm -f qplacer a.out out.txt outpad.txt

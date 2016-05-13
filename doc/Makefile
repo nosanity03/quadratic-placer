@@ -10,6 +10,7 @@ generate: ../qplacer.cpp ../solver.cpp ../solver.h
 
 clean:
 	rm -rf qplacer.cpp solver.h solver.cpp *.log
+	cd latex/; make clean
 
 new: 
 	doxygen -g docconfig

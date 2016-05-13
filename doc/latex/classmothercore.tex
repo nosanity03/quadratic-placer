@@ -404,28 +404,28 @@ Helper function which prints the pads in the present core. \begin{DoxySeeAlso}{S
 \index{mothercore@{mothercore}!gate@{gate}}
 \index{gate@{gate}!mothercore@{mothercore}}
 \subsubsection[{gate}]{\setlength{\rightskip}{0pt plus 5cm}map$<$int, {\bf vi} $>$ mothercore\+::gate\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classmothercore_a6d876a7f308f91dedcfeffab73b6d7e1}{}\label{classmothercore_a6d876a7f308f91dedcfeffab73b6d7e1}
-A Hash Table storing informations about gates in the A\+S\+IC \index{mothercore@{mothercore}!gateX@{gateX}}
+A Hash Table storing informations about gates in the A\+S\+IC. It lists the net ids connected to each gate. \index{mothercore@{mothercore}!gateX@{gateX}}
 \index{gateX@{gateX}!mothercore@{mothercore}}
 \subsubsection[{gateX}]{\setlength{\rightskip}{0pt plus 5cm}map$<$int, double$>$ mothercore\+::gateX\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classmothercore_ac267207dbf960e3f837769edee99d024}{}\label{classmothercore_ac267207dbf960e3f837769edee99d024}
-A Hash Table storing x-\/coordinates of gates in the A\+S\+IC \index{mothercore@{mothercore}!gateY@{gateY}}
+A Hash Table storing x-\/coordinates of gates in the A\+S\+IC. \index{mothercore@{mothercore}!gateY@{gateY}}
 \index{gateY@{gateY}!mothercore@{mothercore}}
 \subsubsection[{gateY}]{\setlength{\rightskip}{0pt plus 5cm}map$<$int, double$>$ mothercore\+::gateY\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classmothercore_a9d61c6914daf39e900b2f1c729be4ed3}{}\label{classmothercore_a9d61c6914daf39e900b2f1c729be4ed3}
-A Hash Table storing y-\/coordinates of gates in the A\+S\+IC \index{mothercore@{mothercore}!nets@{nets}}
+A Hash Table storing y-\/coordinates of gates in the A\+S\+IC. \index{mothercore@{mothercore}!nets@{nets}}
 \index{nets@{nets}!mothercore@{mothercore}}
 \subsubsection[{nets}]{\setlength{\rightskip}{0pt plus 5cm}map$<$int, {\bf vvi}$>$ mothercore\+::nets\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classmothercore_a38b10c51ec32bf1583bcfcca022a378b}{}\label{classmothercore_a38b10c51ec32bf1583bcfcca022a378b}
-A Hash Table storing informations about nets in the A\+S\+IC \index{mothercore@{mothercore}!numG@{numG}}
+A Hash Table storing informations about nets in the A\+S\+IC. One vector consists of the gate ids connected by this net. Other vector consists of the net ids connected by this net. \index{mothercore@{mothercore}!numG@{numG}}
 \index{numG@{numG}!mothercore@{mothercore}}
 \subsubsection[{numG}]{\setlength{\rightskip}{0pt plus 5cm}int mothercore\+::numG\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classmothercore_ae81a713046775c9beb1e865f54238d58}{}\label{classmothercore_ae81a713046775c9beb1e865f54238d58}
-Number of gates in the A\+S\+IC \index{mothercore@{mothercore}!numN@{numN}}
+Number of gates in the A\+S\+IC. \index{mothercore@{mothercore}!numN@{numN}}
 \index{numN@{numN}!mothercore@{mothercore}}
 \subsubsection[{numN}]{\setlength{\rightskip}{0pt plus 5cm}int mothercore\+::numN\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classmothercore_a06dd4fcec53dffd503474103e59fd2ed}{}\label{classmothercore_a06dd4fcec53dffd503474103e59fd2ed}
-Number of nets in the A\+S\+IC \index{mothercore@{mothercore}!numP@{numP}}
+Number of nets in the A\+S\+IC. \index{mothercore@{mothercore}!numP@{numP}}
 \index{numP@{numP}!mothercore@{mothercore}}
 \subsubsection[{numP}]{\setlength{\rightskip}{0pt plus 5cm}int mothercore\+::numP\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classmothercore_a2267ccb4d62638cb401e86b612a7b88a}{}\label{classmothercore_a2267ccb4d62638cb401e86b612a7b88a}
-Number of pads in the A\+S\+IC \index{mothercore@{mothercore}!pad@{pad}}
+Number of pads in the A\+S\+IC. \index{mothercore@{mothercore}!pad@{pad}}
 \index{pad@{pad}!mothercore@{mothercore}}
 \subsubsection[{pad}]{\setlength{\rightskip}{0pt plus 5cm}map$<$int, {\bf vd} $>$ mothercore\+::pad\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classmothercore_aa99289e91a4a78b1edc271498a68f88b}{}\label{classmothercore_aa99289e91a4a78b1edc271498a68f88b}
-A Hash Table storing informations about pads in the A\+S\+IC 
+A Hash Table storing informations about pads in the A\+S\+IC. It lists the net connected to each pad, x and y coordinate of the pad. Assuming each pad is connected to only one net. 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

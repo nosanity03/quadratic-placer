@@ -1,3 +1,24 @@
+/**
+ * File:    qplacer.cpp
+ *
+ * Main class and functions for running the placer.
+ *
+ * Defines a class "mothercore" to store description of an ASIC. This class is
+ * used to recursively place the gates in the ASIC into desirable locations.
+ * The algorithm described here is called Quadratic Placement. The reference of
+ * the theory is available in an online course by Prof. Rob A. Rutenbar in 
+ * Coursera by the title “VLSI CAD: Logic to Layout” hosted by University of 
+ * Illinois at Urbana-Champaign (https://www.coursera.org/course/vlsicad),
+ * accessed February to May '2014. The solver used in this file is obtained
+ * from "solver.h" which was provided by the same course material. It uses
+ * conjugate gradient method to iteratively solve a sparse matrix of the form
+ * Ax=b to find x. The final coordinates of the gates are written back to a
+ * file, which can be visualized using the visualizer python script.
+ *
+ * Author:  Soumik Sarkar 
+ * Email:   soumik.sarkar17@gmail.com
+ */
+
 #include<iostream>
 #include<fstream>
 #include<cstdlib>
@@ -21,14 +42,22 @@ typedef vector<double> vd;
  * Class which defines an ASIC and its components.
  */
 class mothercore{
-	int numG,                 /**< Number of gates in the ASIC */
-      numP,                 /**< Number of pads in the ASIC */ 
-      numN;                 /**< Number of nets in the ASIC */
-	map <int, vi > gate;      /**< A Hash Table storing informations about gates in the ASIC */
-	map <int, vd > pad;       /**< A Hash Table storing informations about pads in the ASIC */
-	map <int, vvi> nets;      /**< A Hash Table storing informations about nets in the ASIC */
-  map <int, double> gateX;  /**< A Hash Table storing x-coordinates of gates in the ASIC */
-  map <int, double> gateY;  /**< A Hash Table storing y-coordinates of gates in the ASIC */
+	int numG,                 /**< Number of gates in the ASIC. */
+      numP,                 /**< Number of pads in the ASIC. */ 
+      numN;                 /**< Number of nets in the ASIC. */
+	map <int, vi > gate;      /**< A Hash Table storing informations about gates 
+                              in the ASIC. It lists the net ids connected to 
+                              each gate. */
+	map <int, vd > pad;       /**< A Hash Table storing informations about pads 
+                              in the ASIC. It lists the net connected to each
+                              pad, x and y coordinate of the pad. Assuming each
+                              pad is connected to only one net. */
+	map <int, vvi> nets;      /**< A Hash Table storing informations about nets 
+                              in the ASIC. One vector consists of the gate ids
+                              connected by this net. Other vector consists of 
+                              the net ids connected by this net. */
+  map <int, double> gateX;  /**< A Hash Table storing x-coordinates of gates in the ASIC. */
+  map <int, double> gateY;  /**< A Hash Table storing y-coordinates of gates in the ASIC. */
 
   public:
   
@@ -876,7 +905,7 @@ vvd containNrun(mothercore *core, vi gatekeys, int bound[4], int hORv, int lORr)
  * 2^n divisions in the ASIC.
  */
 void place(mothercore *core, vi gatekeys, int bound[4], int n) {
-  if (n >= 2) return;
+  if (n >= 10) return;
   else {
     cout << endl;
     cout << endl;
